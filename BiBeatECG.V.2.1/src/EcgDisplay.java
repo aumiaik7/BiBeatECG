@@ -611,7 +611,6 @@ public class EcgDisplay extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
@@ -1363,23 +1362,15 @@ public class EcgDisplay extends javax.swing.JFrame {
         jPanel7.setMinimumSize(new java.awt.Dimension(1, 1));
         jPanel7.setPreferredSize(new java.awt.Dimension(1237, 25));
 
-        jLabel1.setText("jLabel1");
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(825, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(41, 41, 41))
+            .addGap(0, 900, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(20, Short.MAX_VALUE))
+            .addGap(0, 45, Short.MAX_VALUE)
         );
 
         jPanel9.setBackground(new java.awt.Color(221, 239, 221));
@@ -2938,7 +2929,6 @@ public class EcgDisplay extends javax.swing.JFrame {
     private javax.swing.JLabel idLabel;
     public javax.swing.JRadioButton iiRadioButton;
     public javax.swing.JRadioButton iiiRadioButton;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
