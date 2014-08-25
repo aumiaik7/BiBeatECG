@@ -72,11 +72,12 @@ public class EcgGraph extends PApplet //implements Runnable{
         /*
          * EcgRecordGraph object
          */
-         EcgRecordGraph ecgR;
+        EcgRecordGraph ecgR;
         LeadDisplay1 ld1;
         LeadDisplay2 ld2;
         LeadDisplay3 ld3 ;
         LeadDisplay4 ld4 ;
+        LeadDisplayExtended2 lde2 ;
 //        LeadDisplay5 ld5 ;
 //        LeadDisplay6 ld6 ;
 //        LeadDisplay7 ld7 ;
@@ -99,13 +100,13 @@ public class EcgGraph extends PApplet //implements Runnable{
 
          }
 
-        public EcgGraph(EcgRecordGraph ecgr, int res, ClientStat cl, LeadDisplay1 l1, LeadDisplay2 l2, LeadDisplay3 l3, LeadDisplay4 l4)//, LeadDisplay5 l5, LeadDisplay6 l6, LeadDisplay7 l7, LeadDisplay8 l8, LeadDisplay9 l9, LeadDisplay10 l10, LeadDisplay11 l11, LeadDisplay12 l12)
+        public EcgGraph(EcgRecordGraph ecgr, int res, ClientStat cl, LeadDisplay1 l1, LeadDisplay2 l2, LeadDisplay3 l3, LeadDisplay4 l4, LeadDisplayExtended2 le2)//, LeadDisplay5 l5, LeadDisplay6 l6, LeadDisplay7 l7, LeadDisplay8 l8, LeadDisplay9 l9, LeadDisplay10 l10, LeadDisplay11 l11, LeadDisplay12 l12)
          {
              ecgR = ecgr;
              //ecgR2 = ecgr2;
              resolution = res;
              clstat = cl;
-             ld1 = l1;ld2 = l2;ld3 = l3;ld4 = l4;
+             ld1 = l1;ld2 = l2;ld3 = l3;ld4 = l4;lde2 = le2;
 //             ld5 = l5;ld6 = l6;ld7 = l7;ld8 = l8;
 //             ld9 = l9;ld10 = l10;ld11 = l11;ld12 = l12;
          }
@@ -192,32 +193,53 @@ public void setValue(int data)
             //flag = true;
             
             //recordBuffer[i] = 0;
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + clstat.getLeadNo());
             
             if(clstat.getLeadNo() == "Lead I" || clstat.getLeadNo() == "Lead II" || clstat.getLeadNo() == "Lead III")
-                try {
+            {    try {
                 ld1.setValue(recordBuffer);//ld1.setValue(iirRecordBuffer);
             } catch (XMPPException ex) {
                 Logger.getLogger(EcgGraph.class.getName()).log(Level.SEVERE, null, ex);
             }//ld1.setValue(iirRecordBuffer);
+            }
             else if(clstat.getLeadNo() == "Lead aVR" || clstat.getLeadNo() == "Lead aVL" || clstat.getLeadNo() == "Lead aVF")
-                try {
+            {   try {
                 ld2.setValue(recordBuffer);
             } catch (XMPPException ex) {
                 Logger.getLogger(EcgGraph.class.getName()).log(Level.SEVERE, null, ex);
             }
+            }
             else if(clstat.getLeadNo() == "Lead V1" || clstat.getLeadNo() == "Lead V2" || clstat.getLeadNo() == "Lead V3")
-                try {
+            {    try {
                 ld3.setValue(recordBuffer);
             } catch (XMPPException ex) {
                 Logger.getLogger(EcgGraph.class.getName()).log(Level.SEVERE, null, ex);
             }
+            }
             else if(clstat.getLeadNo() == "Lead V4" || clstat.getLeadNo() == "Lead V5" || clstat.getLeadNo() == "Lead V6")
-                try {
+            {    try {
                 ld4.setValue(recordBuffer);
 
             //recordBuffer = null;
-            } catch (XMPPException ex) {
+            }
+            
+                catch (XMPPException ex) {
                 Logger.getLogger(EcgGraph.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+            else if(clstat.getLeadNo() == "Extended Lead II")
+            {
+                 try {
+                     
+                lde2.setValue(recordBuffer);
+                
+
+            //recordBuffer = null;
+            }
+            
+                catch (XMPPException ex) {
+                Logger.getLogger(EcgGraph.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
            
         }

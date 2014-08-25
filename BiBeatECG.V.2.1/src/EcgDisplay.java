@@ -131,12 +131,14 @@ public class EcgDisplay extends javax.swing.JFrame {
           * 
           */
         LeadDisplay1 ld1 = new LeadDisplay1(clstat,resolution,usb,ecgr,this,jabb);LeadDisplay2 ld2 = new LeadDisplay2(clstat,resolution,usb,ecgr,this,jabb);
-        LeadDisplay3 ld3 = new LeadDisplay3(clstat,resolution,usb,ecgr,this,jabb);LeadDisplay4 ld4 = new LeadDisplay4(clstat,resolution,usb,ecgr,this,jabb);
+        LeadDisplay3 ld3 = new LeadDisplay3(clstat,resolution,usb,ecgr,this,jabb); LeadDisplay4 ld4 = new LeadDisplay4(clstat,resolution,usb,ecgr,this,jabb);
+        LeadDisplayExtended2 lde2 = new LeadDisplayExtended2(clstat,resolution,usb,ecgr,this,jabb);
+        
         
         /*
          * LeadDisplay5 is a PApplet for realtime ECG display
          */
-        LeadDisplay5 ld5 = new LeadDisplay5(clstat,resolution,ld1,ld2,ld3,ld4);
+        LeadDisplay5 ld5 = new LeadDisplay5(clstat,resolution,ld1,ld2,ld3,ld4,lde2);
         
         RecipientEmail email = new RecipientEmail(clstat);
         
@@ -180,7 +182,7 @@ public class EcgDisplay extends javax.swing.JFrame {
          * The ECG data are sent to this class and they are stored untill 4096 data are being collected
          * After 4096 data are being collected they are sent to LeadDisplay1/LeadDisplay2/LeadDisplay3/LeadDisplay4
          */
-        EcgGraph ecg = new EcgGraph(ecgr,resolution,clstat,ld1,ld2,ld3,ld4);//,ld5,ld6,ld7,ld8,ld9,ld10,ld11,ld12);
+        EcgGraph ecg = new EcgGraph(ecgr,resolution,clstat,ld1,ld2,ld3,ld4,lde2);//,ld5,ld6,ld7,ld8,ld9,ld10,ld11,ld12);
         
         InReportRead read = new InReportRead(sync,myhid,sw);
         /*
@@ -468,7 +470,7 @@ public class EcgDisplay extends javax.swing.JFrame {
           ld1Panel.add(ld1);ld2Panel.add(ld2);
           ld3Panel.add(ld3);ld4Panel.add(ld4);
           ld1Panel.add(ld1);
-          beatPanel.add(ecgr);
+          extended2Panel.add(lde2);
           realtimePanel2.add(ld5);
           
         
@@ -516,13 +518,13 @@ public class EcgDisplay extends javax.swing.JFrame {
 //        ld10Panel.add(ld10);ld11Panel.add(ld11);ld12Panel.add(ld12);
 //        voidPanel.add(clstat);
         ecg.init();
-        ecgr.init();
+        //ecgr.init();
         //beat.init();
         //clstat.init();
-        ld1.init();ld2.init();ld3.init();ld4.init();ld5.init();
+        ld1.init();ld2.init();ld3.init();ld4.init();ld5.init();lde2.init();
 //        ld5.init();ld6.init();ld7.init();ld8.init();
 //        ld9.init();ld10.init();ld11.init();ld12.init();
-        clstat.leadDisplay(ld1, ld2, ld3, ld4);
+        clstat.leadDisplay(ld1, ld2, ld3, ld4, lde2);
 
         //voidPanel.setVisible(false);
         
@@ -584,7 +586,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         ld2Panel = new javax.swing.JPanel();
         ld3Panel = new javax.swing.JPanel();
         ld4Panel = new javax.swing.JPanel();
-        beatPanel = new javax.swing.JPanel();
+        extended2Panel = new javax.swing.JPanel();
         realtimePanel = new javax.swing.JPanel();
         realtimePanel2 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -608,6 +610,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         startStopToggleButton = new javax.swing.JToggleButton();
         reportButton = new javax.swing.JButton();
         upazilaLabel = new javax.swing.JLabel();
+        eiiRadioButton = new javax.swing.JRadioButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -917,20 +920,20 @@ public class EcgDisplay extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("V4  V5  V6", ld4Panel);
 
-        beatPanel.setPreferredSize(new java.awt.Dimension(501, 121));
+        extended2Panel.setPreferredSize(new java.awt.Dimension(501, 121));
 
-        javax.swing.GroupLayout beatPanelLayout = new javax.swing.GroupLayout(beatPanel);
-        beatPanel.setLayout(beatPanelLayout);
-        beatPanelLayout.setHorizontalGroup(
-            beatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout extended2PanelLayout = new javax.swing.GroupLayout(extended2Panel);
+        extended2Panel.setLayout(extended2PanelLayout);
+        extended2PanelLayout.setHorizontalGroup(
+            extended2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 501, Short.MAX_VALUE)
         );
-        beatPanelLayout.setVerticalGroup(
-            beatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        extended2PanelLayout.setVerticalGroup(
+            extended2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 452, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Heart Beat", beatPanel);
+        jTabbedPane1.addTab("Extended lead II", extended2Panel);
 
         jScrollPane1.setViewportView(jTabbedPane1);
 
@@ -1080,7 +1083,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         jPanel8.setPreferredSize(new java.awt.Dimension(300, 120));
 
         leadComboBox.setBackground(new java.awt.Color(240, 240, 240));
-        leadComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Lead", "Lead I", "Lead II", "Lead III", "Lead aVR", "Lead aVL", "Lead aVF", "Lead V1", "Lead V2", "Lead V3", "Lead V4", "Lead V5", "Lead V6" }));
+        leadComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Lead", "Lead I", "Lead II", "Lead III", "Lead aVR", "Lead aVL", "Lead aVF", "Lead V1", "Lead V2", "Lead V3", "Lead V4", "Lead V5", "Lead V6", "Extended Lead II" }));
         leadComboBox.setMinimumSize(new java.awt.Dimension(0, 0));
         leadComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1103,8 +1106,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nextLeadButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                    .addComponent(leadComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nextLeadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leadComboBox, 0, 233, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -1207,6 +1210,18 @@ public class EcgDisplay extends javax.swing.JFrame {
         upazilaLabel.setForeground(new java.awt.Color(0, 51, 255));
         upazilaLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
+        eiiRadioButton.setBackground(new java.awt.Color(221, 239, 221));
+        buttonGroup6.add(eiiRadioButton);
+        eiiRadioButton.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        eiiRadioButton.setText("Extended  II");
+        eiiRadioButton.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        eiiRadioButton.setMinimumSize(new java.awt.Dimension(0, 0));
+        eiiRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eiiRadioButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -1238,9 +1253,12 @@ public class EcgDisplay extends javax.swing.JFrame {
                                 .addGap(0, 0, 0)
                                 .addComponent(avlRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(v2RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(v5RadioButton)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(v2RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(v5RadioButton))
+                                    .addComponent(eiiRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
@@ -1255,19 +1273,19 @@ public class EcgDisplay extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(reportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(startStopToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(realtimePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(reportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(startStopToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(realtimePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(upazilaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1309,14 +1327,16 @@ public class EcgDisplay extends javax.swing.JFrame {
                                 .addComponent(avrRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(v1RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(v4RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(123, 123, 123)
+                            .addGap(81, 81, 81)
+                            .addComponent(eiiRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(35, 35, 35)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(iiRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(avlRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(v2RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(v5RadioButton)))
-                            .addGap(138, 138, 138)
+                            .addGap(124, 124, 124)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(avfRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1997,7 +2017,7 @@ public class EcgDisplay extends javax.swing.JFrame {
                 selectLead[1]=  0x02;
                 jTabbedPane1.setSelectedIndex(0);
                 usb.SetFeatureReport(selectLead, i);
-                iiRadioButton.setSelected(true);
+                eiiRadioButton.setSelected(true);
                 
                 read.activateStop(true);
                 write.activateStop(true);
@@ -2274,6 +2294,35 @@ public class EcgDisplay extends javax.swing.JFrame {
                 read.activateStop(false);
                 write.activateStop(false);
                 break;    
+                
+                case 13:
+                    
+                selectLead[1]=  0x02;
+                jTabbedPane1.setSelectedIndex(4);
+                usb.SetFeatureReport(selectLead, i);
+                eiiRadioButton.setSelected(true);
+                
+                read.activateStop(true);
+                write.activateStop(true);
+                ld5.reset();
+                
+               current = System.currentTimeMillis();
+
+               // secondsToDelay = 1.5f;//just say five
+
+                future = current + (700);//1000 milliseconds in a second
+                //future+=secondsToDelay;
+
+                while(System.currentTimeMillis()<future){
+                //allow time to pass
+                }
+//              
+               
+                read.activateStop(false);
+                write.activateStop(false);
+                
+                
+                break;
                     
         }
 
@@ -2283,7 +2332,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         short i = 9;
         int j = leadComboBox.getSelectedIndex();
-        if(j == 12)
+        if(j == 13)
         {  
             j = 1;
             leadComboBox.setSelectedIndex(j);
@@ -2418,6 +2467,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(false);
             v5RadioButton.setVisible(false);
             v6RadioButton.setVisible(false);
+            
+            eiiRadioButton.setVisible(false);
         }
         
         if(index == 1)
@@ -2437,6 +2488,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(false);
             v5RadioButton.setVisible(false);
             v6RadioButton.setVisible(false);
+            
+            eiiRadioButton.setVisible(false);
         }
         
          if(index == 2)
@@ -2456,6 +2509,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(false);
             v5RadioButton.setVisible(false);
             v6RadioButton.setVisible(false);
+            
+            eiiRadioButton.setVisible(false);
         }
          
           if(index == 3)
@@ -2475,6 +2530,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(true);
             v5RadioButton.setVisible(true);
             v6RadioButton.setVisible(true);
+            
+            eiiRadioButton.setVisible(false);
         }
           
            if(index == 4)
@@ -2494,6 +2551,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(false);
             v5RadioButton.setVisible(false);
             v6RadioButton.setVisible(false);
+            
+            eiiRadioButton.setVisible(true);
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
@@ -2521,7 +2580,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         clstat=null;
         ld5=null;
         ecgr=null;
-        ld1=null; ld2=null; ld3=null; ld4=null;
+        ld1=null; ld2=null; ld3=null; ld4=null;lde2=null;
         ecg=null;
         disp = null;
         
@@ -2645,7 +2704,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         clstat=null;
         ld5=null;
         ecgr=null;
-        ld1=null; ld2=null; ld3=null; ld4=null;
+        ld1=null; ld2=null; ld3=null; ld4=null;lde2=null;
         ecg=null;
         disp = null;
         try {
@@ -2862,6 +2921,11 @@ public class EcgDisplay extends javax.swing.JFrame {
             Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void eiiRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eiiRadioButtonMouseClicked
+        // TODO add your handling code here:
+        leadComboBox.setSelectedIndex(12);
+    }//GEN-LAST:event_eiiRadioButtonMouseClicked
 /**/
     
     public void addAtachments(String[] attachments, Multipart multipart)
@@ -2909,7 +2973,6 @@ public class EcgDisplay extends javax.swing.JFrame {
     public javax.swing.JRadioButton avfRadioButton;
     public javax.swing.JRadioButton avlRadioButton;
     public javax.swing.JRadioButton avrRadioButton;
-    private javax.swing.JPanel beatPanel;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
@@ -2918,6 +2981,8 @@ public class EcgDisplay extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.ButtonGroup buttonGroup7;
     private javax.swing.ButtonGroup buttonGroup8;
+    public javax.swing.JRadioButton eiiRadioButton;
+    private javax.swing.JPanel extended2Panel;
     public javax.swing.JRadioButton femaleButton;
     private javax.swing.JRadioButtonMenuItem fifteenRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem fiftyRadioButtonMenuItem;

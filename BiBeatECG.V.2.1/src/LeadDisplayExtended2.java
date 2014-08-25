@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  * @author Abul Bashar
  */
 
-public class LeadDisplay4 extends PApplet{
+public class LeadDisplayExtended2 extends PApplet{
 
 
 
@@ -55,14 +55,17 @@ public class LeadDisplay4 extends PApplet{
       private boolean isTrue = false;
       private boolean isLocal1 = false;
       private boolean isLocal2 = false;
-      private boolean isLocal3 = false;
+      
       private boolean flag1 = false;
       private boolean flag2 = false;
-      private boolean flag3 = false;
+     
       private boolean bf1 = false; // bf means Buffer Flag
       private boolean bf2 = false;
-      private boolean bf3 = false;
+     
       private String sendData = "";
+     
+      
+      byte selectLead[] = new byte[9];
 
       private String filepath = "c:/a1.txt";
 
@@ -73,20 +76,30 @@ public class LeadDisplay4 extends PApplet{
       EcgRecordGraph ecgr;
       EcgDisplay ecgD;
       communication usb;
+     
       JabberSmackAPI jabb;
-
+      
+ 
+     
       PImage img;
-    //private double i;
-      //GetSet getset;
+      float avg = 0;
+    
 
-    public LeadDisplay4(ClientStat cs, int r, communication u,EcgRecordGraph er, EcgDisplay ed,JabberSmackAPI j) {
+    public LeadDisplayExtended2(ClientStat cs, int r, communication u,EcgRecordGraph er,EcgDisplay ed,JabberSmackAPI j) {
         clstat = cs;
         resolution = r;
         usb = u;
         ecgr = er;
         ecgD = ed;
         jabb = j;
-       
+        
+        for(int i = 0; i <9 ; i++)
+          {
+
+              selectLead[i]=  0;
+          }
+        
+        //utp = ut;
     }
 
 
@@ -99,6 +112,9 @@ public class LeadDisplay4 extends PApplet{
     public void setValue(int[] val) throws XMPPException
     {
 
+        float avg = 0;
+     
+        
 
        background(255,255,240);
        strokeWeight( 0.0f);
@@ -136,10 +152,10 @@ public class LeadDisplay4 extends PApplet{
        * Color of the line
        */
 
-       int delY[] = new int[val.length];
-       int del2Y[] = new int[val.length];
+       
 
-    int del3Y[] = new int[512];
+       
+       int del3Y[] = new int[512];
        
        
        if(clstat.getSendDataFlag() == 1 || clstat.getSendDataFlag() == 3)
@@ -167,33 +183,30 @@ public class LeadDisplay4 extends PApplet{
                     del3Y[j] = (int)(val[j])  ;
                
                }
-            ecgD.jTabbedPane1.setSelectedIndex(3);
-        }
+           ecgD.jTabbedPane1.setSelectedIndex(0);
+       }
 
-        if(clstat.getLeadNo().equals("Lead V4"))
+        if(clstat.getLeadNo().equals("Extended Lead II"))
          {
-
+             
                 flag2 = false;
-                flag3 = false;
-
-                 //isLocal1 = true;
+              
+               
+                 
                  flag1 = true;
-                 //flag2 = false;
-                 //flag3 = false;
+                
 
               bf2 = true;
-              bf3 = true;
+            
               bf1 = false;
-              //midpoint = -(25*25);
-              midpoint = -(25*15);
-              clstat.setLeadV4(del3Y);
+              midpoint = -(25*9);
+              clstat.setLead1(del3Y);
+          
               if(clstat.getSendDataFlag() == 3)
               {
-
-                  
                   sendData = "";
                   sendData += clstat.getFirstName() + "\n";
-                 // sendData += clstat.getLastName() + "\n";
+                  //sendData += clstat.getLastName() + "\n";
                   sendData += clstat.getSex() + "\n";
                   sendData += clstat.getAge() + "\n";
                   sendData += clstat.getLeadNo() + "\n";
@@ -203,45 +216,41 @@ public class LeadDisplay4 extends PApplet{
                   sendData += clstat.getUpazila() + "\n";
                   sendData += clstat.gethorScalling() + "\n";
                   
+                  
                     for(int i = 0; i<del3Y.length;i++)
                   {
-               // outputStream.write(del3Y[i] + "\n");
+              
                       sendData += del3Y[i] + "\n";
                   }
                   
                   jabb.sendMessage(sendData, clstat.getgmailID());
+                
+            
               }
+    
          }
-         else if(clstat.getLeadNo().equals("Lead V5"))
+         else if(clstat.getLeadNo().equals("Lead II"))
          {
-
-                //isLocal2 = false;
-                //isLocal1 = true;
-                //isLocal3 = true;
+            
+            
                 flag1 = false;
-                flag3 = false;
+               
                 flag2 = true;
                 bf1 = true;
-                bf3 = true;
+                
                 bf2 = false;
-                //flag2 = false;
+              
+           
 
-                  //isLocal2 = true;
-
-                  //flag1 = false;
-                  //flag3 = false;
-
-
-             //midpoint = -(25*15);
-                midpoint = -(25*9);
-             clstat.setLeadV5(del3Y);
+             midpoint = -(25*9);
+             clstat.setLead2(del3Y);
              if(clstat.getSendDataFlag() == 3)
-              {
+             {
+                 
              
-                  
                   sendData = "";
                   sendData += clstat.getFirstName() + "\n";
-                  //sendData += clstat.getLastName() + "\n";
+                
                   sendData += clstat.getSex() + "\n";
                   sendData += clstat.getAge() + "\n";
                   sendData += clstat.getLeadNo() + "\n";
@@ -253,60 +262,14 @@ public class LeadDisplay4 extends PApplet{
                   
                     for(int i = 0; i<del3Y.length;i++)
                   {
-               // outputStream.write(del3Y[i] + "\n");
+            
                       sendData += del3Y[i] + "\n";
                   }
                   
                   jabb.sendMessage(sendData, clstat.getgmailID());
               }
          }
-         else if(clstat.getLeadNo().equals("Lead V6"))
-         {
-
-                //isLocal3 = false;
-                //isLocal1 = true;
-                //isLocal2 = true;
-                flag1 = false;
-                flag2 = false;
-                flag3 = true;
-                bf1 = true;
-                bf2 = true;
-                bf3 = false;
-                //flag3 = false;
-
-                 //isLocal3 = true;
-
-                 //flag1 = false;
-                 //flag2 = false;
-
-
-             //midpoint = -(25*5);
-                midpoint = -(25*3);
-             clstat.setLeadV6(del3Y);
-             if(clstat.getSendDataFlag() == 3)
-              {
-              
-                   sendData = "";
-                  sendData += clstat.getFirstName() + "\n";
-                  //sendData += clstat.getLastName() + "\n";
-                  sendData += clstat.getSex() + "\n";
-                  sendData += clstat.getAge() + "\n";
-                  sendData += clstat.getLeadNo() + "\n";
-                  sendData += clstat.getGain() + "\n";
-                  sendData += clstat.getFilterFlag() + "\n";
-                  sendData += clstat.getPatientId() + "\n";
-                  sendData += clstat.getUpazila() + "\n";
-                  sendData += clstat.gethorScalling() + "\n";
-                  
-                    for(int i = 0; i<del3Y.length;i++)
-                  {
-               // outputStream.write(del3Y[i] + "\n");
-                      sendData += del3Y[i] + "\n";
-                  }
-                  
-                  jabb.sendMessage(sendData, clstat.getgmailID());
-              }
-         }
+        
 
 
         if(isLocal1 && bf1)
@@ -324,21 +287,13 @@ public class LeadDisplay4 extends PApplet{
            {
                int xto = (int) (i * del);
                 float Gain =  clstat.getGain();
-                //int yto = height-yval;
+               
                 int yto = localBuffer1[i] ;
-                //yto = (int) (yto * localGain);
+               
                 yto = height-yto;
-                //int yto = (int) (((ecgrecord[i]+ ecgrecord[i+1])/2) * 0.8);
-                //int yto = (int) (ecgrecord[i] * 0.8);
-                /*
-                 * Draw the line
-                 */
-                //line(xprev,yprev, xto,yto);
-                //System.out.println((offset*Gain) - yval);
-
-                //line(localXprev,(localYprev)+(-(25*25)), xto,(yto)+(-(25*25)));
+               
                 line(localXprev,(localYprev)+(-(25*15)), xto,(yto)+(-(25*15)));
-                //System.out.println("Abaaaaaaaaaaaaaaaaaaaaaa");
+               
 
 
                 localXprev = xto;
@@ -361,19 +316,11 @@ public class LeadDisplay4 extends PApplet{
            {
                int xto = (int) (i * del);
                 float Gain =  clstat.getGain();
-                //int yto = height-yval;
+               
                 int yto = localBuffer2[i] ;
-                //yto = (int) (yto * localGain);
+               
                 yto = height-yto;
-                //int yto = (int) (((ecgrecord[i]+ ecgrecord[i+1])/2) * 0.8);
-                //int yto = (int) (ecgrecord[i] * 0.8);
-                /*
-                 * Draw the line
-                 */
-                //line(xprev,yprev, xto,yto);
-                //System.out.println((offset*Gain) - yval);
-
-                //line(localXprev,(localYprev)+(-(25*15)), xto,(yto)+(-(25*15)));
+              
                 line(localXprev,(localYprev)+(-(25*9)), xto,(yto)+(-(25*9)));
 
 
@@ -381,41 +328,7 @@ public class LeadDisplay4 extends PApplet{
                 localYprev = yto;
            }
        }
-        if(isLocal3 && bf3)
-       {
-           stroke(128,0,64);
-            //fill(255,255,255,255);
-            smooth();
-           /*
-            * weight of line
-            */
-            strokeWeight(1);
-
-            localXprev = 0;
-           for (int i = 0; i < del3Y.length; i++)
-           {
-               int xto = (int) (i * del);
-                float Gain =  clstat.getGain();
-                //int yto = height-yval;
-                int yto = localBuffer3[i] ;
-                //yto = (int) (yto * localGain);
-                yto = height-yto;
-                //int yto = (int) (((ecgrecord[i]+ ecgrecord[i+1])/2) * 0.8);
-                //int yto = (int) (ecgrecord[i] * 0.8);
-                /*
-                 * Draw the line
-                 */
-                //line(xprev,yprev, xto,yto);
-                //System.out.println((offset*Gain) - yval);
-
-                //line(localXprev,(localYprev)+(-(25*5)), xto,(yto)+(-(25*5)));
-                line(localXprev,(localYprev)+(-(25*3)), xto,(yto)+(-(25*3)));
-
-
-                localXprev = xto;
-                localYprev = yto;
-           }
-       }
+       
 
        stroke(128,0,64);
        smooth();
@@ -427,16 +340,16 @@ public class LeadDisplay4 extends PApplet{
 
 
 
-
+       
        xprev = 0;
 
 
-
+         
          //midpoint = 172;
 //JOptionPane.showMessageDialog(null, "Helllooooo =" + val.length);
+       
 
-
-
+         
 
          for(int i = 0; i < del3Y.length ; i++)
          {
@@ -447,49 +360,37 @@ public class LeadDisplay4 extends PApplet{
                 {
                     localBuffer1[i] = del3Y[i];
                     isLocal1 = true;
+                    selectLead[1]=  0x01;
                 }
                 else if(flag2)
                 {
                     localBuffer2[i] = del3Y[i];
                     isLocal2 = true;
+                    selectLead[1]=  0x02;
                 }
-                else if(flag3)
-                {
-                    localBuffer3[i] = del3Y[i];
-                    isLocal3 = true;
-                }
+               
                 int xto = (int) (i * del);
-//                float Gain =  clstat.getGain();
-//                //int yto = height-yval;
-//                //int yto = val[i] ;
-//                int yto = del3Y[i] ;
-//                yto = (int) (yto * localGain);
-//                yto = height-yto;
+                float Gain =  clstat.getGain();
+                //int yto = height-yval;
+                //int yto = val[i] ;
                 int yto = 0 ;
                 yto = (int)(height-del3Y[i]);
-                //int yto = (int) (((ecgrecord[i]+ ecgrecord[i+1])/2) * 0.8);
-                //int yto = (int) (ecgrecord[i] * 0.8);
-                /*
-                 * Draw the line
-                 */
-                //line(xprev,yprev, xto,yto);
-                //System.out.println((offset*Gain) - yval);
-
+               
                 line(xprev,(yprev)+(midpoint), xto,(yto)+(midpoint));
 
 
                 xprev = xto;
                 yprev = yto;
+                
 
         }
-         //isLocal1 = true;
+         //del3Y = null;
+         
+
 
 
     }
-        //resolution = res;
-
-         //JOptionPane.showMessageDialog(null,"Length="+ecgrecord1.length);
-
+      
 
 
 
@@ -503,8 +404,7 @@ public void setup () {
        *set the window size:
        */
       //size(774, 664);
-     //size(501, 751);
-    size(501, 451);
+     size(501, 301);
       ecgrecord = new int[resolution];
 
       smooth();
@@ -517,15 +417,15 @@ public void setup () {
       //background(img);
       //hint(ENABLE_DEPTH_TEST);
 
-
-
+      
+      
 
       //del = width*1.0/resolution;
       del = 1;
       iPos = 0;
 
 
-
+      
 
       /*
        * Color of the line
