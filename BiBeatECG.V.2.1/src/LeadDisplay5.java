@@ -49,17 +49,19 @@ public class LeadDisplay5 extends PApplet{
       LeadDisplay2 ld2;
       LeadDisplay3 ld3;
       LeadDisplay4 ld4;
+      LeadDisplayExtended2 lde2;
       
 
       //GetSet getset;
 
-    public LeadDisplay5(ClientStat cs, int r, LeadDisplay1 l1, LeadDisplay2 l2, LeadDisplay3 l3,LeadDisplay4 l4) {
+    public LeadDisplay5(ClientStat cs, int r, LeadDisplay1 l1, LeadDisplay2 l2, LeadDisplay3 l3, LeadDisplay4 l4,LeadDisplayExtended2 le2) {
         clstat = cs;
         resolution = r;
         ld1 = l1;
         ld2 = l2;
         ld3 = l3;
         ld4 = l4;
+        lde2 = le2;
     }
 
 
@@ -119,6 +121,19 @@ public class LeadDisplay5 extends PApplet{
             //recordBuffer = null;
             } catch (XMPPException ex) {
                 Logger.getLogger(EcgGraph.class.getName()).log(Level.SEVERE, null, ex);
+            }
+               else if(clstat.getLeadNo() == "Extended Lead II")
+            {
+                 try {
+                     
+                lde2.setValue(storedData);
+
+            //recordBuffer = null;
+            } catch (XMPPException ex) {
+                Logger.getLogger(EcgGraph.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //recordBuffer = null;
             }
            start1 = System.currentTimeMillis();
            

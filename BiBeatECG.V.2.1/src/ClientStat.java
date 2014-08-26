@@ -29,6 +29,7 @@ public class ClientStat {//extends PApplet{
     private static int[] leadaVR = null;private static int[] leadaVL = null;private static int[] leadaVF = null;
     private static int[] leadV1 = null;private static int[] leadV2 = null;private static int[] leadV3 = null;
     private static int[] leadV4 = null;private static int[] leadV5 = null;private static int[] leadV6 = null;
+    private static int[] leadE1 = null;private static int[] leadE2 = null;
     private int sendDataFalag = 0;
     private float gain = 0.9f;
     private String upazila;
@@ -48,6 +49,7 @@ public class ClientStat {//extends PApplet{
     LeadDisplay2 ld2;
     LeadDisplay3 ld3;
     LeadDisplay4 ld4;
+    LeadDisplayExtended2 lde2;
     
     
     
@@ -278,6 +280,15 @@ public class ClientStat {//extends PApplet{
          leadV6 = leadv6;
      }
      
+     public void setLeadE21(int[] leade1)
+     {
+         leadE1 = leade1;
+     }
+     
+     public void setLeadE22(int[] leade2)
+     {
+         leadE2 = leade2;
+     }
      
       public int[] getLead1()
       {
@@ -328,6 +339,16 @@ public class ClientStat {//extends PApplet{
          return leadV6;
       }
      
+      public int[] getLeadE2()
+      {
+         int aLen = leadE1.length;
+         int bLen = leadE2.length;
+         int[] leadE= new int[aLen+bLen];
+         System.arraycopy(leadE1, 0, leadE, 0, aLen);
+         System.arraycopy(leadE2, 0, leadE, aLen, bLen);
+         return leadE;
+      }
+     
      public void setNode(DefaultMutableTreeNode nod)
      {
          node = nod;
@@ -348,12 +369,13 @@ public class ClientStat {//extends PApplet{
      {
          return sendDataFalag;
      }
-     public void leadDisplay(LeadDisplay1 l1,LeadDisplay2 l2,LeadDisplay3 l3,LeadDisplay4 l4)
+     public void leadDisplay(LeadDisplay1 l1,LeadDisplay2 l2,LeadDisplay3 l3, LeadDisplay4 l4, LeadDisplayExtended2 le2)
      {
          ld1 = l1;
          ld2 = l2;
          ld3 = l3;
          ld4 = l4;
+         lde2 = le2; 
      }
      public LeadDisplay1 getDisplay1Object()
      {
@@ -367,9 +389,14 @@ public class ClientStat {//extends PApplet{
      {
          return ld3;
      }
-        public LeadDisplay4 getDisplay4Object()
+       
+       public LeadDisplay4 getDisplay4Object()
      {
          return ld4;
+     }
+        public LeadDisplayExtended2 getDisplaye2Object()
+     {
+         return lde2;
      }
         
     public void dataFalg(boolean fl)

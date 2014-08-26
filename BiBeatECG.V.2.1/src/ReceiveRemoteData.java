@@ -176,6 +176,11 @@ public class ReceiveRemoteData extends Thread{
                               display.v6RadioButton.setSelected(true);
                           }
                           
+                           else if(lead.equals("Extended Lead II"))
+                          {
+                              display.eiiRadioButton.setSelected(true);
+                          }
+                          
                           
                           if(gain.equals("0.9"))
                           {
@@ -261,6 +266,15 @@ public class ReceiveRemoteData extends Thread{
                         } catch (XMPPException ex) {
                             Logger.getLogger(ReceiveRemoteData.class.getName()).log(Level.SEVERE, null, ex);
                         }//ld4.setValue(buffer);
+                          
+                         else if(clstat.getLeadNo().equals("Extended Lead II"))
+                              try {
+                            clstat.getDisplaye2Object().setValue(buffer);//ld4.setValue(buffer);
+                        
+                      //...
+                        } catch (XMPPException ex) {
+                            Logger.getLogger(ReceiveRemoteData.class.getName()).log(Level.SEVERE, null, ex);
+                        }//ld4.setValue(buffe
                           
                         //...
                     } catch (IOException ex) {
