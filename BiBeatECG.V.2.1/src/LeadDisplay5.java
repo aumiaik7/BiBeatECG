@@ -44,7 +44,7 @@ public class LeadDisplay5 extends PApplet{
       private boolean isTrue = false;
       ClientStat clstat;
       long start1 ;
-      private static int[] storedData = new int[512]; 
+      static int[] storedData = new int[512]; 
       LeadDisplay1 ld1;
       LeadDisplay2 ld2;
       LeadDisplay3 ld3;

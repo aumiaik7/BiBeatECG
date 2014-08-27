@@ -249,7 +249,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         static int [] lead1 = new int[512];static int [] lead2 = new int[512];static int [] lead3 = new int[512];static int [] lead4 = new int[512];
         static int [] lead5 = new int[512];static int [] lead6 = new int[512];static int [] lead7 = new int[512];static int [] lead8 = new int[512];
         static int [] lead9 = new int[512];static int [] lead10 = new int[512];static int [] lead11 = new int[512];static int [] lead12 = new int[512];
-        static int [] leade2 = new int[1024];
+        static int [] leade21 = new int[512]; static int [] leade22 = new int[512];
         
         int gainF ;
         int horScallingF ;
@@ -1631,7 +1631,20 @@ public class EcgDisplay extends javax.swing.JFrame {
         lead1 = clstat.getLead1(); lead2 = clstat.getLead2(); lead3 = clstat.getLead3(); lead4 = clstat.getLeadaVR();
         lead5 = clstat.getLeadaVL(); lead6 = clstat.getLeadaVF(); lead7 = clstat.getLeadV1(); lead8 = clstat.getLeadV2();
         lead9 = clstat.getLeadV3(); lead10 = clstat.getLeadV4(); lead11 = clstat.getLeadV5(); lead12 = clstat.getLeadV6();
-        leade2 = clstat.getLeadE2();
+        
+        
+        
+        
+            leade21 = ClientStat.leadE21; 
+        
+        
+        
+            leade22 = ClientStat.leadE22; 
+        
+        
+        
+        
+        
         String horizontalScaling = "", verticalScaling = "", sec0 = "", sec1 = "", sec2 = "", sec3 = "", sec4 = "";
         
         
@@ -1698,8 +1711,8 @@ public class EcgDisplay extends javax.swing.JFrame {
                             + "<lead10>" + lead10[i] + "</lead10>" + "\n"
                             + "<lead11>" + lead11[i] + "</lead11>" + "\n"
                             + "<lead12>" + lead12[i] + "</lead12>" + "\n"
-                            + "<leade21>" + leade2[i] + "</leade21>" + "\n"
-                            + "<leade22>" + leade2[i+512] + "</leade22>" + "\n"
+                            + "<leade21>" + leade21[i] + "</leade21>" + "\n"
+                            + "<leade22>" + leade22[i] + "</leade22>" + "\n"
                             + "</lead>" + "\n"); 
                     outputStream.write("</leadstart>" + "\n");
                 }

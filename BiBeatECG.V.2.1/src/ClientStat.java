@@ -26,10 +26,13 @@ public class ClientStat {//extends PApplet{
     private String sex = "Not selected";
     private String age = "Not Given";
     private static int[] lead1 = new int[512];private static int[] lead2 = new int[512];private static int[] lead3 = new int[512];
-    private static int[] leadaVR = null;private static int[] leadaVL = null;private static int[] leadaVF = null;
-    private static int[] leadV1 = null;private static int[] leadV2 = null;private static int[] leadV3 = null;
-    private static int[] leadV4 = null;private static int[] leadV5 = null;private static int[] leadV6 = null;
-    private static int[] leadE1 = null;private static int[] leadE2 = null;
+    private static int[] leadaVR = new int[512];private static int[] leadaVL = new int[512];private static int[] leadaVF = new int[512];
+    private static int[] leadV1 = new int[512];private static int[] leadV2 = new int[512];private static int[] leadV3 = new int[512];
+    private static int[] leadV4 = new int[512];private static int[] leadV5 = new int[512];private static int[] leadV6 = new int[512];
+    
+    static int[] leadE21 = new int[512];  
+    static int[] leadE22 = new int[512];
+    
     private int sendDataFalag = 0;
     private float gain = 0.9f;
     private String upazila;
@@ -280,15 +283,24 @@ public class ClientStat {//extends PApplet{
          leadV6 = leadv6;
      }
      
-     public void setLeadE21(int[] leade1)
+     public void setLeadE(int[] leade1, int[] leade2)
      {
-         leadE1 = leade1;
+         
+         //for(int i = 0; i < 512 ; i++)
+         //{
+            
+         
+         leadE21 = leade1;
+         
+         leadE22 = leade2;
+         
+         //}
      }
      
-     public void setLeadE22(int[] leade2)
-     {
-         leadE2 = leade2;
-     }
+//     public void setLeadE22(int[] leade2)
+//     {
+//         leadE22 = leade2;
+//     }
      
       public int[] getLead1()
       {
@@ -339,15 +351,18 @@ public class ClientStat {//extends PApplet{
          return leadV6;
       }
      
-      public int[] getLeadE2()
+      public int[] getLeadE21()
       {
-         int aLen = leadE1.length;
-         int bLen = leadE2.length;
-         int[] leadE= new int[aLen+bLen];
-         System.arraycopy(leadE1, 0, leadE, 0, aLen);
-         System.arraycopy(leadE2, 0, leadE, aLen, bLen);
-         return leadE;
+         
+         return leadE21;
       }
+      
+      public int[] getLeadE22()
+      {
+         
+         return leadE22;
+      }
+     
      
      public void setNode(DefaultMutableTreeNode nod)
      {
