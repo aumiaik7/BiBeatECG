@@ -259,7 +259,7 @@ public class LeadDisplayExtended2 extends PApplet{
        if(flag1){
             for(int i = 0; i < 512 ; i++)
               {
-               localBuffer2[i] = val[i];
+               localBuffer3[i] = val[i];
               }
             flag1=false;
        }
@@ -267,13 +267,15 @@ public class LeadDisplayExtended2 extends PApplet{
        
           for(int i = 0; i < 512 ; i++)
             {
-                localBuffer3[i] = val[i];
+                localBuffer2[i] = val[i];
             }
           flag1=true;
        }
        
-        clstat.setLeadE(localBuffer2, localBuffer3);
-       
+        if(flag1)
+            clstat.setLeadE(localBuffer3, localBuffer2);
+       else
+            clstat.setLeadE(localBuffer2, localBuffer3);
        
        
        

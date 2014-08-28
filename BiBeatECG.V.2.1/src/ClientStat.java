@@ -286,15 +286,15 @@ public class ClientStat {//extends PApplet{
      public void setLeadE(int[] leade1, int[] leade2)
      {
          
-         //for(int i = 0; i < 512 ; i++)
-         //{
+         for(int i = 0; i < 512 ; i++)
+         {
             
          
-         leadE21 = leade1;
+         leadE21[i] = leade1[i];
          
-         leadE22 = leade2;
+         leadE22[i] = leade2[i];
          
-         //}
+         }
      }
      
 //     public void setLeadE22(int[] leade2)

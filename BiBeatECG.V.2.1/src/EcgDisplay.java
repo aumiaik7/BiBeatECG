@@ -588,6 +588,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         ld3Panel = new javax.swing.JPanel();
         ld4Panel = new javax.swing.JPanel();
         extended2Panel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         realtimePanel = new javax.swing.JPanel();
         realtimePanel2 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -757,7 +758,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         v5RadioButton.setBackground(new java.awt.Color(221, 239, 221));
         buttonGroup6.add(v5RadioButton);
         v5RadioButton.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        v5RadioButton.setText("V5");
+        v5RadioButton.setText("  V5");
         v5RadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 v5RadioButtonMouseClicked(evt);
@@ -923,15 +924,24 @@ public class EcgDisplay extends javax.swing.JFrame {
 
         extended2Panel.setPreferredSize(new java.awt.Dimension(501, 121));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Please take two consecutive measurements ");
+
         javax.swing.GroupLayout extended2PanelLayout = new javax.swing.GroupLayout(extended2Panel);
         extended2Panel.setLayout(extended2PanelLayout);
         extended2PanelLayout.setHorizontalGroup(
             extended2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 501, Short.MAX_VALUE)
+            .addGroup(extended2PanelLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel1)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         extended2PanelLayout.setVerticalGroup(
             extended2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 452, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, extended2PanelLayout.createSequentialGroup()
+                .addContainerGap(312, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
         );
 
         jTabbedPane1.addTab("Extended lead II", extended2Panel);
@@ -1696,7 +1706,7 @@ public class EcgDisplay extends javax.swing.JFrame {
                     + "<sec4>" + sec4 + "</sec4>" +"\n");
                         
             outputStream.write("</info>" + "\n");
-           for(int i = 1; i < clstat.getLead1().length - 9 ; i++)
+           for(int i = 1; i < clstat.getLead1().length - 10 ; i++)
                 {
                     outputStream.write("<leadstart>" + "\n");
                     outputStream.write("<lead>" + "\n" + "<x>" + (i-1) + "</x>" + "\n" + "<lead1>" + lead1[i] + "</lead1>" + "\n" 
@@ -3011,6 +3021,7 @@ public class EcgDisplay extends javax.swing.JFrame {
     private javax.swing.JLabel idLabel;
     public javax.swing.JRadioButton iiRadioButton;
     public javax.swing.JRadioButton iiiRadioButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
