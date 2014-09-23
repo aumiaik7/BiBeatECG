@@ -32,9 +32,9 @@ import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.query.JRXPathQueryExecuterFactory;
 import net.sf.jasperreports.engine.util.AbstractSampleApp;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.engine.util.JRXmlUtils;
 import net.sf.jasperreports.view.JasperViewer;
-
 import org.w3c.dom.Document;
 
 /*
@@ -63,7 +63,9 @@ public class ReportGeneration extends javax.swing.JFrame {
         this.setIconImage(img.getImage());
         this.setLocationRelativeTo(null);
         initComponents();
-         jFileChooser2.setCurrentDirectory(new File("./Database"));
+        jFileChooser2.setCurrentDirectory(new File("./Database"));
+         
+       JRProperties.setProperty("net.sf.jasperreports.xpath.executer.factory","net.sf.jasperreports.engine.util.xml.JaxenXPathExecuterFactory");
         //setLocation(100, 100);
     }
 
@@ -150,9 +152,14 @@ public class ReportGeneration extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+ 
         JasperReport jasperReport = null;
-        long start = System.currentTimeMillis();
+        JasperViewer jv = null;
+        JasperPrint jprint = null;
+                long start = System.currentTimeMillis();
+        
         Map params = new HashMap();
+        
 //		Document document = JRXmlUtils.parse(JRLoader.getLocationInputStream("data/northwind.xml"));
         Document document = null;
             try 
@@ -176,7 +183,7 @@ public class ReportGeneration extends javax.swing.JFrame {
                  //jasperReport = JasperCompileManager.compileReport("reports/CustomersReport.jrxml");
 		//JasperFillManager.fillReportToFile(jasperReport, params);
 //                 net.sf.jasperreports.engine.JasperPrint jprint = JasperFillManager.fillReport("reports/CustomersReport.jasper", params);
-                 net.sf.jasperreports.engine.JasperPrint jprint = null;
+                
             try 
             {
                 //File file3 = new File("./report/EcgReport.jasper");
@@ -189,8 +196,11 @@ public class ReportGeneration extends javax.swing.JFrame {
             catch (JRException ex) {
                 Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
             }
-                System.out.println("A");
-                JasperViewer.viewReport(jprint,false);
+                jv = new JasperViewer(jprint, false);
+                jv.setTitle("ECG Report");
+                jv.setAlwaysOnTop(true);
+                jv.setVisible(true);
+                //jv.viewReport(jprint,false);
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
             try {
                 JasperExportManager.exportReportToPdfFile(jprint, "./report/EcgReport.pdf");

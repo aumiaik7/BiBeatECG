@@ -63,6 +63,7 @@ import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.query.JRXPathQueryExecuterFactory;
 import net.sf.jasperreports.engine.util.AbstractSampleApp;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.engine.util.JRXmlUtils;
 import net.sf.jasperreports.view.JasperViewer;
 import org.jivesoftware.smack.XMPPException;
@@ -275,7 +276,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         //this.setAlwaysOnTop(true);
         initComponents();
         
-        
+        JRProperties.setProperty("net.sf.jasperreports.xpath.executer.factory","net.sf.jasperreports.engine.util.xml.JaxenXPathExecuterFactory");
         
         
        //this.setLocationRelativeTo(null);
@@ -1600,6 +1601,7 @@ public class EcgDisplay extends javax.swing.JFrame {
 //        ld3Panel.revalidate();
 //        ld4Panel.revalidate();
         //jScrollPane1.revalidate();
+        
          try {
               
            
@@ -1744,6 +1746,8 @@ public class EcgDisplay extends javax.swing.JFrame {
              * Print
              */
             JasperReport jasperReport = null;
+            JasperViewer jv = null;
+            JasperPrint jprint = null;
                 
                 long start = System.currentTimeMillis();
 		Map params = new HashMap();
@@ -1770,7 +1774,7 @@ public class EcgDisplay extends javax.swing.JFrame {
                  //jasperReport = JasperCompileManager.compileReport("reports/CustomersReport.jrxml");
 		//JasperFillManager.fillReportToFile(jasperReport, params);
 //                 net.sf.jasperreports.engine.JasperPrint jprint = JasperFillManager.fillReport("reports/CustomersReport.jasper", params);
-                 net.sf.jasperreports.engine.JasperPrint jprint = null;
+                 
             try 
             {
                 //File file3 = new File("./report/EcgReport.jasper");
@@ -1783,8 +1787,12 @@ public class EcgDisplay extends javax.swing.JFrame {
             catch (JRException ex) {
                 Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
             }
-                System.out.println("A");
-                JasperViewer.viewReport(jprint,false);
+                //System.out.println("A");
+                jv = new JasperViewer(jprint, false);
+                jv.setTitle("ECG Report");
+                jv.setAlwaysOnTop(true);
+                jv.setVisible(true);
+               
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
             try {
                 JasperExportManager.exportReportToPdfFile(jprint, "./report/EcgReport.pdf");
