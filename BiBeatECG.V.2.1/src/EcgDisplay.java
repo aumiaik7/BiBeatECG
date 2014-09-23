@@ -1604,11 +1604,14 @@ public class EcgDisplay extends javax.swing.JFrame {
               
            
             if(clstat.getSendDataFlag() !=2)
-           { idoutputStream = new FileWriter("./Info/id.txt");
-            idoutputStream.write(""+(id+1));
-            idoutputStream.flush();
-            idoutputStream.close();
-            InStream.close();
+           
+            {
+                login.setVisible(true);
+                idoutputStream = new FileWriter("./Info/id.txt");
+                idoutputStream.write(""+(id+1));
+                idoutputStream.flush();
+                idoutputStream.close();
+                InStream.close();
            }
             
             
@@ -1794,6 +1797,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         catch (IOException ex) {
             Logger.getLogger(EcgRecordGraph.class.getName()).log(Level.SEVERE, null, ex);
         }
+        login.setVisible(false);
 
     }//GEN-LAST:event_reportButtonActionPerformed
 
