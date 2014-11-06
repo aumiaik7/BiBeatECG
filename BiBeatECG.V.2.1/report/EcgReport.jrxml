@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EcgReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="0.9090909090909093"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="61"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="ecg">
 		<queryString language="xPath">
 			<![CDATA[/start/leadstart/lead]]>
@@ -77,6 +77,9 @@
 	<field name="vert" class="java.lang.String">
 		<fieldDescription><![CDATA[vert]]></fieldDescription>
 	</field>
+	<field name="vertV" class="java.lang.String">
+		<fieldDescription><![CDATA[vertV]]></fieldDescription>
+	</field>
 	<field name="sec0" class="java.lang.String">
 		<fieldDescription><![CDATA[sec0]]></fieldDescription>
 	</field>
@@ -107,7 +110,7 @@
 			<textField>
 				<reportElement x="211" y="0" width="392" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Old English Text MT" size="18"/>
+					<font fontName="Times New Roman" size="17"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{upazila}]]></textFieldExpression>
 			</textField>
@@ -249,42 +252,42 @@
 				<text><![CDATA[aVF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="737" y="105" width="32" height="20"/>
+				<reportElement x="727" y="105" width="32" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<text><![CDATA[V1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="736" y="145" width="32" height="20"/>
+				<reportElement x="726" y="145" width="32" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<text><![CDATA[V2]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="738" y="182" width="32" height="20"/>
+				<reportElement x="728" y="182" width="32" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<text><![CDATA[V3]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="736" y="215" width="32" height="20"/>
+				<reportElement x="726" y="215" width="32" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<text><![CDATA[V4]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="736" y="254" width="32" height="20"/>
+				<reportElement x="726" y="254" width="32" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<text><![CDATA[V5]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="736" y="297" width="32" height="20"/>
+				<reportElement x="726" y="297" width="32" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
@@ -484,7 +487,7 @@
 					<xySeries>
 						<seriesExpression><![CDATA["Lead E21"]]></seriesExpression>
 						<xValueExpression><![CDATA[$F{x}]]></xValueExpression>
-						<yValueExpression><![CDATA[$F{leade21}+(70*1)]]></yValueExpression>
+						<yValueExpression><![CDATA[$F{leade21}+(50*1)]]></yValueExpression>
 					</xySeries>
 				</xyDataset>
 				<linePlot isShowLines="true" isShowShapes="false">
@@ -536,7 +539,7 @@
 					<xySeries>
 						<seriesExpression><![CDATA["Lead E22"]]></seriesExpression>
 						<xValueExpression><![CDATA[$F{x}]]></xValueExpression>
-						<yValueExpression><![CDATA[$F{leade22}+(70*1)]]></yValueExpression>
+						<yValueExpression><![CDATA[$F{leade22}+(50*1)]]></yValueExpression>
 					</xySeries>
 				</xyDataset>
 				<linePlot isShowLines="true" isShowShapes="false">
@@ -753,6 +756,22 @@
 			<line>
 				<reportElement x="65" y="61" width="1" height="288"/>
 			</line>
+			<textField>
+				<reportElement x="621" y="18" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{vertV}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="389" y="61" width="1" height="279"/>
+			</line>
+			<line>
+				<reportElement x="65" y="340" width="649" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="602" y="463" width="201" height="20"/>
+				<textElement/>
+				<text><![CDATA[Designed and Developed by: Banglamed]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>
