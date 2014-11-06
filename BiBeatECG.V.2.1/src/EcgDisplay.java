@@ -1660,7 +1660,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         
         
         
-        String horizontalScaling = "", verticalScaling = "", sec0 = "", sec1 = "", sec2 = "", sec3 = "", sec4 = "";
+        String horizontalScaling = "", verticalScaling = "",verticalScalingV = "", sec0 = "", sec1 = "", sec2 = "", sec3 = "", sec4 = "";
         
         
         if(clstat.gethorScalling()==1)
@@ -1684,12 +1684,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             sec0 = "0s";sec1 = "0.5s";sec2 = "1s"; sec3 = "1.5s"; sec4 = "2s";
         }
         
-        if(clstat.getGain() == 0.9f)
-        {
-            verticalScaling = "10 mm/mV";
-        }
-        else
-            verticalScaling = "5 mm/mV";
+       verticalScaling = this.clstat.getVerticalScalling();
+       verticalScalingV = this.clstat.getVerticalScallingV();
         
         
         try {
@@ -1704,6 +1700,7 @@ public class EcgDisplay extends javax.swing.JFrame {
                     + "<upazila>" + clstat.getUpazila() + "</upazila>" +"\n"
                     + "<horiz>" + horizontalScaling + "</horiz>" +"\n"
                     + "<vert>" + verticalScaling + "</vert>" +"\n"
+                    + "<vertV>" + verticalScalingV + "</vertV>" +"\n"
                     + "<sec0>" + sec0 + "</sec0>" +"\n"
                     + "<sec1>" + sec1 + "</sec1>" +"\n"
                     + "<sec2>" + sec2 + "</sec2>" +"\n"
@@ -2010,360 +2007,298 @@ public class EcgDisplay extends javax.swing.JFrame {
     private void leadComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leadComboBoxActionPerformed
         // TODO add your handling code here:
         
-        clstat.setSelectedLead((String)leadComboBox.getSelectedItem());
-        int j = leadComboBox.getSelectedIndex();
-        short i = 9;
-         long current;
-        // float secondsToDelay;
-         long future ;
-        switch (j) 
-        {
-            case 1:
-                selectLead[1]=  0x01;
-                jTabbedPane1.setSelectedIndex(0);
-                usb.SetFeatureReport(selectLead, i);
-                iRadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                
-                ld5.reset();
-                
-                
-                current = System.currentTimeMillis();
+         this.clstat.setSelectedLead((String)this.leadComboBox.getSelectedItem());
+    int j = this.leadComboBox.getSelectedIndex();
+    short i = 9;
+    long current;
+    long future;
+    switch (j)
+    {
+    case 1: 
+      this.selectLead[1] = 1;
+      this.jTabbedPane1.setSelectedIndex(0);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.iRadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-               // secondsToDelay = 1.5f;//just say five
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-                
-                
-                read.activateStop(false);
-                write.activateStop(false);
-                
-//                if(myhid.IntSendOutputReport(selectLead))
-//                    System.out.println("Yapppiiiiiiii");
-                break;
-                
-                case 2:
-                
-               
-                
-                selectLead[1]=  0x02;
-                jTabbedPane1.setSelectedIndex(0);
-                usb.SetFeatureReport(selectLead, i);
-                eiiRadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
 
-               // secondsToDelay = 1.5f;//just say five
+      break;
+    case 2: 
+      this.selectLead[1] = 2;
+      this.jTabbedPane1.setSelectedIndex(0);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.eiiRadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-//              
-               
-                read.activateStop(false);
-                write.activateStop(false);
-                
-                
-                break;
-                
-                case 3:
-                selectLead[1]=  0x03;
-                jTabbedPane1.setSelectedIndex(0);
-                usb.SetFeatureReport(selectLead, i);
-                iiiRadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      break;
+    case 3: 
+      this.selectLead[1] = 3;
+      this.jTabbedPane1.setSelectedIndex(0);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.iiiRadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                
-                break;
-                    
-                case 4:
-                selectLead[1]=  0x04;
-                jTabbedPane1.setSelectedIndex(1);
-                usb.SetFeatureReport(selectLead, i);
-                avrRadioButton.setSelected(true);
-                
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      
+      break;
+    case 4: 
+      this.selectLead[1] = 4;
+      this.jTabbedPane1.setSelectedIndex(1);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.avrRadioButton.setSelected(true);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;
-                    
-                case 5:
-                selectLead[1]=  0x05;
-                jTabbedPane1.setSelectedIndex(1);
-                usb.SetFeatureReport(selectLead, i);
-                avlRadioButton.setSelected(true);
-                
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 5: 
+      this.selectLead[1] = 5;
+      this.jTabbedPane1.setSelectedIndex(1);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.avlRadioButton.setSelected(true);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                
-                case 6:
-                selectLead[1]=  0x06;
-                jTabbedPane1.setSelectedIndex(1);
-                usb.SetFeatureReport(selectLead, i);
-                avfRadioButton.setSelected(true);
-                
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 6: 
+      this.selectLead[1] = 6;
+      this.jTabbedPane1.setSelectedIndex(1);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.avfRadioButton.setSelected(true);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 7:
-                selectLead[1]=  0x07;
-                jTabbedPane1.setSelectedIndex(2);
-                usb.SetFeatureReport(selectLead, i);
-                v1RadioButton.setSelected(true);
-                
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 7: 
+      this.selectLead[1] = 7;
+      this.jTabbedPane1.setSelectedIndex(2);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v1RadioButton.setSelected(true);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                
-                case 8:
-                selectLead[1]=  0x08;
-                jTabbedPane1.setSelectedIndex(2);
-                usb.SetFeatureReport(selectLead, i);
-                v2RadioButton.setSelected(true);
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 8: 
+      this.selectLead[1] = 8;
+      this.jTabbedPane1.setSelectedIndex(2);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v2RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-               // secondsToDelay = 1.5f;//just say five
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 9: 
+      this.selectLead[1] = 9;
+      this.jTabbedPane1.setSelectedIndex(2);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v3RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 9:
-                selectLead[1]=  0x09;
-                jTabbedPane1.setSelectedIndex(2);
-                usb.SetFeatureReport(selectLead, i);
-                v3RadioButton.setSelected(true);
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
 
-               // secondsToDelay = 1.5f;//just say five
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 10: 
+      this.selectLead[1] = 10;
+      this.jTabbedPane1.setSelectedIndex(3);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v4RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 10:
-                selectLead[1]=  0x0a;
-                jTabbedPane1.setSelectedIndex(3);
-                usb.SetFeatureReport(selectLead, i);
-                v4RadioButton.setSelected(true);
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 11: 
+      this.selectLead[1] = 11;
+      this.jTabbedPane1.setSelectedIndex(3);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v5RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-               // secondsToDelay = 1.5f;//just say five
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 12: 
+      this.selectLead[1] = 12;
+      this.jTabbedPane1.setSelectedIndex(3);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v6RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 11:
-                selectLead[1]=  0x0b;
-                jTabbedPane1.setSelectedIndex(3);
-                usb.SetFeatureReport(selectLead, i);
-                v5RadioButton.setSelected(true);
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
 
-               // secondsToDelay = 1.5f;//just say five
-
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
-
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 12:
-                selectLead[1]=  0x0c;
-                jTabbedPane1.setSelectedIndex(3);
-                usb.SetFeatureReport(selectLead, i);
-                v6RadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
-
-               // secondsToDelay = 1.5f;//just say five
-
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
-
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                
-                case 13:
-                    
-                selectLead[1]=  0x02;
-                jTabbedPane1.setSelectedIndex(4);
-                usb.SetFeatureReport(selectLead, i);
-                eiiRadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
-
-               // secondsToDelay = 1.5f;//just say five
-
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
-
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-//              
-               
-                read.activateStop(false);
-                write.activateStop(false);
-                
-                
-                break;
-                    
-        }
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 13: 
+      this.selectLead[1] = 2;
+      this.jTabbedPane1.setSelectedIndex(4);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.eiiRadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if ("10 mm/mV".equals(this.clstat.getVerticalScalling())) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+          System.out.println("A"+this.clstat.getVerticalScalling());
+      } else {
+        fivemmButtonMenuItemActionPerformed(evt);
+        System.out.println("B"+this.clstat.getVerticalScalling());
+      }
+      current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+    }
 
     }//GEN-LAST:event_leadComboBoxActionPerformed
 
@@ -2637,47 +2572,62 @@ public class EcgDisplay extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void fivemmButtonMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fivemmButtonMenuItemActionPerformed
-        // TODO add your handling code here:
-        short i = 9;
-        gainFactor[1] =  (byte) 0xbb;
-        usb.SetFeatureReport(gainFactor, i);
-        clstat.setGain(0.84f);
-        gainLabel.setText("5 mm/mV");
-        
-        gainF = 1;
-        try {
-            flagoutputStream = new FileWriter("./Info/flags.txt");
-            
-            String flags = gainF+"\n"+horScallingF+"\n"+filterF;
-            
-            flagoutputStream.write(flags);
-            flagoutputStream.flush();
-            flagoutputStream.close();
-        } catch (IOException ex) {
+          this.fivemmButtonMenuItem.setSelected(true);
+          short i = 9;
+          this.gainFactor[1] = -69;
+          this.usb.SetFeatureReport(this.gainFactor, i);
+          this.clstat.setGain(0.84F);
+          this.gainLabel.setText("5 mm/mV");
+          if ((this.leadComboBox.getSelectedIndex() <= 6) || (this.leadComboBox.getSelectedIndex() == 13)) {
+            this.clstat.setVerticalScaling("5 mm/mV");
+          } else {
+            this.clstat.setVerticalScalingV("5 mm/mV");
+          }
+          this.gainF = 1;
+          try
+          {
+            this.flagoutputStream = new FileWriter("./Info/flags.txt");
+
+            String flags = this.gainF + "\n" + this.horScallingF + "\n" + this.filterF;
+
+            this.flagoutputStream.write(flags);
+            this.flagoutputStream.flush();
+            this.flagoutputStream.close();
+          }
+          catch (IOException ex)
+          {
             Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          }
     }//GEN-LAST:event_fivemmButtonMenuItemActionPerformed
 
     private void tenmmButtonMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenmmButtonMenuItem3ActionPerformed
         // TODO add your handling code here:
         
-         short i = 9;
-        gainFactor[1] =  (byte) 0xaa;
-        usb.SetFeatureReport(gainFactor, i);
-        clstat.setGain(0.9f);
-        gainLabel.setText("10 mm/mV");
-        
-         gainF = 2;
-        try {
-            flagoutputStream = new FileWriter("./Info/flags.txt");
-            
-            String flags = gainF+"\n"+horScallingF+"\n"+filterF;
-            
-            flagoutputStream.write(flags);
-            flagoutputStream.flush();
-            flagoutputStream.close();
-        } catch (IOException ex) {
-            Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
+        this.tenmmButtonMenuItem3.setSelected(true);
+        short i = 9;
+        this.gainFactor[1] = -86;
+        this.usb.SetFeatureReport(this.gainFactor, i);
+        this.clstat.setGain(0.9F);
+        this.gainLabel.setText("10 mm/mV");
+        if ((this.leadComboBox.getSelectedIndex() <= 6) || (this.leadComboBox.getSelectedIndex() == 13)) {
+          this.clstat.setVerticalScaling("10 mm/mV");
+        } else {
+          this.clstat.setVerticalScalingV("10 mm/mV");
+        }
+        this.gainF = 2;
+        try
+        {
+          this.flagoutputStream = new FileWriter("./Info/flags.txt");
+
+          String flags = this.gainF + "\n" + this.horScallingF + "\n" + this.filterF;
+
+          this.flagoutputStream.write(flags);
+          this.flagoutputStream.flush();
+          this.flagoutputStream.close();
+        }
+        catch (IOException ex)
+        {
+          Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_tenmmButtonMenuItem3ActionPerformed
