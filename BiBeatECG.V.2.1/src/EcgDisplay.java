@@ -63,6 +63,7 @@ import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.query.JRXPathQueryExecuterFactory;
 import net.sf.jasperreports.engine.util.AbstractSampleApp;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.engine.util.JRXmlUtils;
 import net.sf.jasperreports.view.JasperViewer;
 import org.jivesoftware.smack.XMPPException;
@@ -131,12 +132,14 @@ public class EcgDisplay extends javax.swing.JFrame {
           * 
           */
         LeadDisplay1 ld1 = new LeadDisplay1(clstat,resolution,usb,ecgr,this,jabb);LeadDisplay2 ld2 = new LeadDisplay2(clstat,resolution,usb,ecgr,this,jabb);
-        LeadDisplay3 ld3 = new LeadDisplay3(clstat,resolution,usb,ecgr,this,jabb);LeadDisplay4 ld4 = new LeadDisplay4(clstat,resolution,usb,ecgr,this,jabb);
+        LeadDisplay3 ld3 = new LeadDisplay3(clstat,resolution,usb,ecgr,this,jabb); LeadDisplay4 ld4 = new LeadDisplay4(clstat,resolution,usb,ecgr,this,jabb);
+        LeadDisplayExtended2 lde2 = new LeadDisplayExtended2(clstat,resolution,usb,ecgr,this,jabb);
+        
         
         /*
          * LeadDisplay5 is a PApplet for realtime ECG display
          */
-        LeadDisplay5 ld5 = new LeadDisplay5(clstat,resolution,ld1,ld2,ld3,ld4);
+        LeadDisplay5 ld5 = new LeadDisplay5(clstat,resolution,ld1,ld2,ld3,ld4,lde2);
         
         RecipientEmail email = new RecipientEmail(clstat);
         
@@ -180,7 +183,7 @@ public class EcgDisplay extends javax.swing.JFrame {
          * The ECG data are sent to this class and they are stored untill 4096 data are being collected
          * After 4096 data are being collected they are sent to LeadDisplay1/LeadDisplay2/LeadDisplay3/LeadDisplay4
          */
-        EcgGraph ecg = new EcgGraph(ecgr,resolution,clstat,ld1,ld2,ld3,ld4);//,ld5,ld6,ld7,ld8,ld9,ld10,ld11,ld12);
+        EcgGraph ecg = new EcgGraph(ecgr,resolution,clstat,ld1,ld2,ld3,ld4,lde2);//,ld5,ld6,ld7,ld8,ld9,ld10,ld11,ld12);
         
         InReportRead read = new InReportRead(sync,myhid,sw);
         /*
@@ -247,6 +250,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         static int [] lead1 = new int[512];static int [] lead2 = new int[512];static int [] lead3 = new int[512];static int [] lead4 = new int[512];
         static int [] lead5 = new int[512];static int [] lead6 = new int[512];static int [] lead7 = new int[512];static int [] lead8 = new int[512];
         static int [] lead9 = new int[512];static int [] lead10 = new int[512];static int [] lead11 = new int[512];static int [] lead12 = new int[512];
+        static int [] leade21 = new int[512]; static int [] leade22 = new int[512];
         
         int gainF ;
         int horScallingF ;
@@ -272,7 +276,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         //this.setAlwaysOnTop(true);
         initComponents();
         
-        
+        JRProperties.setProperty("net.sf.jasperreports.xpath.executer.factory","net.sf.jasperreports.engine.util.xml.JaxenXPathExecuterFactory");
         
         
        //this.setLocationRelativeTo(null);
@@ -468,7 +472,7 @@ public class EcgDisplay extends javax.swing.JFrame {
           ld1Panel.add(ld1);ld2Panel.add(ld2);
           ld3Panel.add(ld3);ld4Panel.add(ld4);
           ld1Panel.add(ld1);
-          beatPanel.add(ecgr);
+          extended2Panel.add(lde2);
           realtimePanel2.add(ld5);
           
         
@@ -516,13 +520,13 @@ public class EcgDisplay extends javax.swing.JFrame {
 //        ld10Panel.add(ld10);ld11Panel.add(ld11);ld12Panel.add(ld12);
 //        voidPanel.add(clstat);
         ecg.init();
-        ecgr.init();
+        //ecgr.init();
         //beat.init();
         //clstat.init();
-        ld1.init();ld2.init();ld3.init();ld4.init();ld5.init();
+        ld1.init();ld2.init();ld3.init();ld4.init();ld5.init();lde2.init();
 //        ld5.init();ld6.init();ld7.init();ld8.init();
 //        ld9.init();ld10.init();ld11.init();ld12.init();
-        clstat.leadDisplay(ld1, ld2, ld3, ld4);
+        clstat.leadDisplay(ld1, ld2, ld3, ld4, lde2);
 
         //voidPanel.setVisible(false);
         
@@ -584,7 +588,8 @@ public class EcgDisplay extends javax.swing.JFrame {
         ld2Panel = new javax.swing.JPanel();
         ld3Panel = new javax.swing.JPanel();
         ld4Panel = new javax.swing.JPanel();
-        beatPanel = new javax.swing.JPanel();
+        extended2Panel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         realtimePanel = new javax.swing.JPanel();
         realtimePanel2 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -608,10 +613,10 @@ public class EcgDisplay extends javax.swing.JFrame {
         startStopToggleButton = new javax.swing.JToggleButton();
         reportButton = new javax.swing.JButton();
         upazilaLabel = new javax.swing.JLabel();
+        eiiRadioButton = new javax.swing.JRadioButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
@@ -754,7 +759,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         v5RadioButton.setBackground(new java.awt.Color(221, 239, 221));
         buttonGroup6.add(v5RadioButton);
         v5RadioButton.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        v5RadioButton.setText("V5");
+        v5RadioButton.setText("  V5");
         v5RadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 v5RadioButtonMouseClicked(evt);
@@ -918,20 +923,29 @@ public class EcgDisplay extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("V4  V5  V6", ld4Panel);
 
-        beatPanel.setPreferredSize(new java.awt.Dimension(501, 121));
+        extended2Panel.setPreferredSize(new java.awt.Dimension(501, 121));
 
-        javax.swing.GroupLayout beatPanelLayout = new javax.swing.GroupLayout(beatPanel);
-        beatPanel.setLayout(beatPanelLayout);
-        beatPanelLayout.setHorizontalGroup(
-            beatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 501, Short.MAX_VALUE)
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Please take two consecutive measurements ");
+
+        javax.swing.GroupLayout extended2PanelLayout = new javax.swing.GroupLayout(extended2Panel);
+        extended2Panel.setLayout(extended2PanelLayout);
+        extended2PanelLayout.setHorizontalGroup(
+            extended2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(extended2PanelLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel1)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
-        beatPanelLayout.setVerticalGroup(
-            beatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 452, Short.MAX_VALUE)
+        extended2PanelLayout.setVerticalGroup(
+            extended2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, extended2PanelLayout.createSequentialGroup()
+                .addContainerGap(312, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
         );
 
-        jTabbedPane1.addTab("Heart Beat", beatPanel);
+        jTabbedPane1.addTab("Extended lead II", extended2Panel);
 
         jScrollPane1.setViewportView(jTabbedPane1);
 
@@ -1081,7 +1095,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         jPanel8.setPreferredSize(new java.awt.Dimension(300, 120));
 
         leadComboBox.setBackground(new java.awt.Color(240, 240, 240));
-        leadComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Lead", "Lead I", "Lead II", "Lead III", "Lead aVR", "Lead aVL", "Lead aVF", "Lead V1", "Lead V2", "Lead V3", "Lead V4", "Lead V5", "Lead V6" }));
+        leadComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Lead", "Lead I", "Lead II", "Lead III", "Lead aVR", "Lead aVL", "Lead aVF", "Lead V1", "Lead V2", "Lead V3", "Lead V4", "Lead V5", "Lead V6", "Extended Lead II" }));
         leadComboBox.setMinimumSize(new java.awt.Dimension(0, 0));
         leadComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1104,8 +1118,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nextLeadButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                    .addComponent(leadComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nextLeadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leadComboBox, 0, 233, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -1208,6 +1222,18 @@ public class EcgDisplay extends javax.swing.JFrame {
         upazilaLabel.setForeground(new java.awt.Color(0, 51, 255));
         upazilaLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
+        eiiRadioButton.setBackground(new java.awt.Color(221, 239, 221));
+        buttonGroup6.add(eiiRadioButton);
+        eiiRadioButton.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        eiiRadioButton.setText("Extended  II");
+        eiiRadioButton.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        eiiRadioButton.setMinimumSize(new java.awt.Dimension(0, 0));
+        eiiRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eiiRadioButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -1239,9 +1265,12 @@ public class EcgDisplay extends javax.swing.JFrame {
                                 .addGap(0, 0, 0)
                                 .addComponent(avlRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(v2RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(v5RadioButton)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(v2RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(v5RadioButton))
+                                    .addComponent(eiiRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
@@ -1256,19 +1285,19 @@ public class EcgDisplay extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(reportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(startStopToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(realtimePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(reportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(startStopToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(realtimePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(upazilaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1310,14 +1339,16 @@ public class EcgDisplay extends javax.swing.JFrame {
                                 .addComponent(avrRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(v1RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(v4RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(123, 123, 123)
+                            .addGap(81, 81, 81)
+                            .addComponent(eiiRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(35, 35, 35)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(iiRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(avlRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(v2RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(v5RadioButton)))
-                            .addGap(138, 138, 138)
+                            .addGap(124, 124, 124)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(avfRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1363,23 +1394,15 @@ public class EcgDisplay extends javax.swing.JFrame {
         jPanel7.setMinimumSize(new java.awt.Dimension(1, 1));
         jPanel7.setPreferredSize(new java.awt.Dimension(1237, 25));
 
-        jLabel1.setText("jLabel1");
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(825, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(41, 41, 41))
+            .addGap(0, 900, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(20, Short.MAX_VALUE))
+            .addGap(0, 45, Short.MAX_VALUE)
         );
 
         jPanel9.setBackground(new java.awt.Color(221, 239, 221));
@@ -1578,15 +1601,19 @@ public class EcgDisplay extends javax.swing.JFrame {
 //        ld3Panel.revalidate();
 //        ld4Panel.revalidate();
         //jScrollPane1.revalidate();
+        
          try {
               
            
             if(clstat.getSendDataFlag() !=2)
-           { idoutputStream = new FileWriter("./Info/id.txt");
-            idoutputStream.write(""+(id+1));
-            idoutputStream.flush();
-            idoutputStream.close();
-            InStream.close();
+           
+            {
+                login.setVisible(true);
+                idoutputStream = new FileWriter("./Info/id.txt");
+                idoutputStream.write(""+(id+1));
+                idoutputStream.flush();
+                idoutputStream.close();
+                InStream.close();
            }
             
             
@@ -1619,7 +1646,21 @@ public class EcgDisplay extends javax.swing.JFrame {
         lead1 = clstat.getLead1(); lead2 = clstat.getLead2(); lead3 = clstat.getLead3(); lead4 = clstat.getLeadaVR();
         lead5 = clstat.getLeadaVL(); lead6 = clstat.getLeadaVF(); lead7 = clstat.getLeadV1(); lead8 = clstat.getLeadV2();
         lead9 = clstat.getLeadV3(); lead10 = clstat.getLeadV4(); lead11 = clstat.getLeadV5(); lead12 = clstat.getLeadV6();
-        String horizontalScaling = "", verticalScaling = "", sec0 = "", sec1 = "", sec2 = "", sec3 = "", sec4 = "";
+        
+        
+        
+        
+            leade21 = ClientStat.leadE21; 
+        
+        
+        
+            leade22 = ClientStat.leadE22; 
+        
+        
+        
+        
+        
+        String horizontalScaling = "", verticalScaling = "",verticalScalingV = "", sec0 = "", sec1 = "", sec2 = "", sec3 = "", sec4 = "";
         
         
         if(clstat.gethorScalling()==1)
@@ -1643,12 +1684,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             sec0 = "0s";sec1 = "0.5s";sec2 = "1s"; sec3 = "1.5s"; sec4 = "2s";
         }
         
-        if(clstat.getGain() == 0.9f)
-        {
-            verticalScaling = "10 mm/mV";
-        }
-        else
-            verticalScaling = "5 mm/mV";
+       verticalScaling = this.clstat.getVerticalScalling();
+       verticalScalingV = this.clstat.getVerticalScallingV();
         
         
         try {
@@ -1663,6 +1700,7 @@ public class EcgDisplay extends javax.swing.JFrame {
                     + "<upazila>" + clstat.getUpazila() + "</upazila>" +"\n"
                     + "<horiz>" + horizontalScaling + "</horiz>" +"\n"
                     + "<vert>" + verticalScaling + "</vert>" +"\n"
+                    + "<vertV>" + verticalScalingV + "</vertV>" +"\n"
                     + "<sec0>" + sec0 + "</sec0>" +"\n"
                     + "<sec1>" + sec1 + "</sec1>" +"\n"
                     + "<sec2>" + sec2 + "</sec2>" +"\n"
@@ -1670,10 +1708,10 @@ public class EcgDisplay extends javax.swing.JFrame {
                     + "<sec4>" + sec4 + "</sec4>" +"\n");
                         
             outputStream.write("</info>" + "\n");
-           for(int i = 0; i < clstat.getLead1().length; i++)
+           for(int i = 1; i < clstat.getLead1().length - 10 ; i++)
                 {
                     outputStream.write("<leadstart>" + "\n");
-                    outputStream.write("<lead>" + "\n" + "<x>" + i + "</x>" + "\n" + "<lead1>" + lead1[i] + "</lead1>" + "\n" 
+                    outputStream.write("<lead>" + "\n" + "<x>" + (i-1) + "</x>" + "\n" + "<lead1>" + lead1[i] + "</lead1>" + "\n" 
                            + "<lead2>" + lead2[i] + "</lead2>" + "\n" 
                             + "<lead3>" + lead3[i] + "</lead3>" + "\n"
                             + "<lead4>" + lead4[i] + "</lead4>" + "\n"
@@ -1685,6 +1723,8 @@ public class EcgDisplay extends javax.swing.JFrame {
                             + "<lead10>" + lead10[i] + "</lead10>" + "\n"
                             + "<lead11>" + lead11[i] + "</lead11>" + "\n"
                             + "<lead12>" + lead12[i] + "</lead12>" + "\n"
+                            + "<leade21>" + leade21[i] + "</leade21>" + "\n"
+                            + "<leade22>" + leade22[i] + "</leade22>" + "\n"
                             + "</lead>" + "\n"); 
                     outputStream.write("</leadstart>" + "\n");
                 }
@@ -1703,6 +1743,8 @@ public class EcgDisplay extends javax.swing.JFrame {
              * Print
              */
             JasperReport jasperReport = null;
+            JasperViewer jv = null;
+            JasperPrint jprint = null;
                 
                 long start = System.currentTimeMillis();
 		Map params = new HashMap();
@@ -1729,7 +1771,7 @@ public class EcgDisplay extends javax.swing.JFrame {
                  //jasperReport = JasperCompileManager.compileReport("reports/CustomersReport.jrxml");
 		//JasperFillManager.fillReportToFile(jasperReport, params);
 //                 net.sf.jasperreports.engine.JasperPrint jprint = JasperFillManager.fillReport("reports/CustomersReport.jasper", params);
-                 net.sf.jasperreports.engine.JasperPrint jprint = null;
+                 
             try 
             {
                 //File file3 = new File("./report/EcgReport.jasper");
@@ -1742,8 +1784,12 @@ public class EcgDisplay extends javax.swing.JFrame {
             catch (JRException ex) {
                 Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
             }
-                System.out.println("A");
-                JasperViewer.viewReport(jprint,false);
+                //System.out.println("A");
+                jv = new JasperViewer(jprint, false);
+                jv.setTitle("ECG Report");
+                jv.setAlwaysOnTop(true);
+                jv.setVisible(true);
+               
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
             try {
                 JasperExportManager.exportReportToPdfFile(jprint, "./report/EcgReport.pdf");
@@ -1756,6 +1802,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         catch (IOException ex) {
             Logger.getLogger(EcgRecordGraph.class.getName()).log(Level.SEVERE, null, ex);
         }
+        login.setVisible(false);
 
     }//GEN-LAST:event_reportButtonActionPerformed
 
@@ -1960,331 +2007,298 @@ public class EcgDisplay extends javax.swing.JFrame {
     private void leadComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leadComboBoxActionPerformed
         // TODO add your handling code here:
         
-        clstat.setSelectedLead((String)leadComboBox.getSelectedItem());
-        int j = leadComboBox.getSelectedIndex();
-        short i = 9;
-         long current;
-        // float secondsToDelay;
-         long future ;
-        switch (j) 
-        {
-            case 1:
-                selectLead[1]=  0x01;
-                jTabbedPane1.setSelectedIndex(0);
-                usb.SetFeatureReport(selectLead, i);
-                iRadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                
-                ld5.reset();
-                
-                
-                current = System.currentTimeMillis();
+         this.clstat.setSelectedLead((String)this.leadComboBox.getSelectedItem());
+    int j = this.leadComboBox.getSelectedIndex();
+    short i = 9;
+    long current;
+    long future;
+    switch (j)
+    {
+    case 1: 
+      this.selectLead[1] = 1;
+      this.jTabbedPane1.setSelectedIndex(0);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.iRadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-               // secondsToDelay = 1.5f;//just say five
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-                
-                
-                read.activateStop(false);
-                write.activateStop(false);
-                
-//                if(myhid.IntSendOutputReport(selectLead))
-//                    System.out.println("Yapppiiiiiiii");
-                break;
-                
-                case 2:
-                
-               
-                
-                selectLead[1]=  0x02;
-                jTabbedPane1.setSelectedIndex(0);
-                usb.SetFeatureReport(selectLead, i);
-                iiRadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
 
-               // secondsToDelay = 1.5f;//just say five
+      break;
+    case 2: 
+      this.selectLead[1] = 2;
+      this.jTabbedPane1.setSelectedIndex(0);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.eiiRadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-//              
-               
-                read.activateStop(false);
-                write.activateStop(false);
-                
-                
-                break;
-                
-                case 3:
-                selectLead[1]=  0x03;
-                jTabbedPane1.setSelectedIndex(0);
-                usb.SetFeatureReport(selectLead, i);
-                iiiRadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      break;
+    case 3: 
+      this.selectLead[1] = 3;
+      this.jTabbedPane1.setSelectedIndex(0);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.iiiRadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                
-                break;
-                    
-                case 4:
-                selectLead[1]=  0x04;
-                jTabbedPane1.setSelectedIndex(1);
-                usb.SetFeatureReport(selectLead, i);
-                avrRadioButton.setSelected(true);
-                
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      
+      break;
+    case 4: 
+      this.selectLead[1] = 4;
+      this.jTabbedPane1.setSelectedIndex(1);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.avrRadioButton.setSelected(true);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;
-                    
-                case 5:
-                selectLead[1]=  0x05;
-                jTabbedPane1.setSelectedIndex(1);
-                usb.SetFeatureReport(selectLead, i);
-                avlRadioButton.setSelected(true);
-                
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 5: 
+      this.selectLead[1] = 5;
+      this.jTabbedPane1.setSelectedIndex(1);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.avlRadioButton.setSelected(true);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                
-                case 6:
-                selectLead[1]=  0x06;
-                jTabbedPane1.setSelectedIndex(1);
-                usb.SetFeatureReport(selectLead, i);
-                avfRadioButton.setSelected(true);
-                
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 6: 
+      this.selectLead[1] = 6;
+      this.jTabbedPane1.setSelectedIndex(1);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.avfRadioButton.setSelected(true);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScalling())) || (("10 mm/mV".equals(this.clstat.getVerticalScalling())) && ("5 mm/mV".equals(this.gainLabel.getText())))) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 7:
-                selectLead[1]=  0x07;
-                jTabbedPane1.setSelectedIndex(2);
-                usb.SetFeatureReport(selectLead, i);
-                v1RadioButton.setSelected(true);
-                
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 7: 
+      this.selectLead[1] = 7;
+      this.jTabbedPane1.setSelectedIndex(2);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v1RadioButton.setSelected(true);
+      
 
-               // secondsToDelay = 1.5f;//just say five
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                
-                case 8:
-                selectLead[1]=  0x08;
-                jTabbedPane1.setSelectedIndex(2);
-                usb.SetFeatureReport(selectLead, i);
-                v2RadioButton.setSelected(true);
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 8: 
+      this.selectLead[1] = 8;
+      this.jTabbedPane1.setSelectedIndex(2);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v2RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-               // secondsToDelay = 1.5f;//just say five
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 9: 
+      this.selectLead[1] = 9;
+      this.jTabbedPane1.setSelectedIndex(2);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v3RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 9:
-                selectLead[1]=  0x09;
-                jTabbedPane1.setSelectedIndex(2);
-                usb.SetFeatureReport(selectLead, i);
-                v3RadioButton.setSelected(true);
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
 
-               // secondsToDelay = 1.5f;//just say five
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 10: 
+      this.selectLead[1] = 10;
+      this.jTabbedPane1.setSelectedIndex(3);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v4RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 10:
-                selectLead[1]=  0x0a;
-                jTabbedPane1.setSelectedIndex(3);
-                usb.SetFeatureReport(selectLead, i);
-                v4RadioButton.setSelected(true);
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 11: 
+      this.selectLead[1] = 11;
+      this.jTabbedPane1.setSelectedIndex(3);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v5RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-               // secondsToDelay = 1.5f;//just say five
 
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 12: 
+      this.selectLead[1] = 12;
+      this.jTabbedPane1.setSelectedIndex(3);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.v6RadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if (("".equals(this.clstat.getVerticalScallingV())) || (("5 mm/mV".equals(this.clstat.getVerticalScallingV())) && ("10 mm/mV".equals(this.gainLabel.getText())))) {
+        fivemmButtonMenuItemActionPerformed(evt);
+      }
+      current = System.currentTimeMillis();
+      
 
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 11:
-                selectLead[1]=  0x0b;
-                jTabbedPane1.setSelectedIndex(3);
-                usb.SetFeatureReport(selectLead, i);
-                v5RadioButton.setSelected(true);
-                
-                  read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
 
-               // secondsToDelay = 1.5f;//just say five
-
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
-
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-                case 12:
-                selectLead[1]=  0x0c;
-                jTabbedPane1.setSelectedIndex(3);
-                usb.SetFeatureReport(selectLead, i);
-                v6RadioButton.setSelected(true);
-                
-                read.activateStop(true);
-                write.activateStop(true);
-                ld5.reset();
-                
-               current = System.currentTimeMillis();
-
-               // secondsToDelay = 1.5f;//just say five
-
-                future = current + (700);//1000 milliseconds in a second
-                //future+=secondsToDelay;
-
-                while(System.currentTimeMillis()<future){
-                //allow time to pass
-                }
-              
-                read.activateStop(false);
-                write.activateStop(false);
-                break;    
-                    
-        }
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+      break;
+    case 13: 
+      this.selectLead[1] = 2;
+      this.jTabbedPane1.setSelectedIndex(4);
+      this.usb.SetFeatureReport(this.selectLead, i);
+      this.eiiRadioButton.setSelected(true);
+      
+      this.read.activateStop(true);
+      this.write.activateStop(true);
+      this.ld5.reset();
+      if ("10 mm/mV".equals(this.clstat.getVerticalScalling())) {
+        tenmmButtonMenuItem3ActionPerformed(evt);
+          System.out.println("A"+this.clstat.getVerticalScalling());
+      } else {
+        fivemmButtonMenuItemActionPerformed(evt);
+        System.out.println("B"+this.clstat.getVerticalScalling());
+      }
+      current = System.currentTimeMillis();
+      future = current + 700L;
+      while (System.currentTimeMillis() < future) {}
+      this.read.activateStop(false);
+      this.write.activateStop(false);
+    }
 
     }//GEN-LAST:event_leadComboBoxActionPerformed
 
@@ -2292,7 +2306,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         short i = 9;
         int j = leadComboBox.getSelectedIndex();
-        if(j == 12)
+        if(j == 13)
         {  
             j = 1;
             leadComboBox.setSelectedIndex(j);
@@ -2427,6 +2441,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(false);
             v5RadioButton.setVisible(false);
             v6RadioButton.setVisible(false);
+            
+            eiiRadioButton.setVisible(false);
         }
         
         if(index == 1)
@@ -2446,6 +2462,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(false);
             v5RadioButton.setVisible(false);
             v6RadioButton.setVisible(false);
+            
+            eiiRadioButton.setVisible(false);
         }
         
          if(index == 2)
@@ -2465,6 +2483,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(false);
             v5RadioButton.setVisible(false);
             v6RadioButton.setVisible(false);
+            
+            eiiRadioButton.setVisible(false);
         }
          
           if(index == 3)
@@ -2484,6 +2504,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(true);
             v5RadioButton.setVisible(true);
             v6RadioButton.setVisible(true);
+            
+            eiiRadioButton.setVisible(false);
         }
           
            if(index == 4)
@@ -2503,6 +2525,8 @@ public class EcgDisplay extends javax.swing.JFrame {
             v4RadioButton.setVisible(false);
             v5RadioButton.setVisible(false);
             v6RadioButton.setVisible(false);
+            
+            eiiRadioButton.setVisible(true);
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
@@ -2530,7 +2554,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         clstat=null;
         ld5=null;
         ecgr=null;
-        ld1=null; ld2=null; ld3=null; ld4=null;
+        ld1=null; ld2=null; ld3=null; ld4=null;lde2=null;
         ecg=null;
         disp = null;
         
@@ -2548,47 +2572,62 @@ public class EcgDisplay extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void fivemmButtonMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fivemmButtonMenuItemActionPerformed
-        // TODO add your handling code here:
-        short i = 9;
-        gainFactor[1] =  (byte) 0xbb;
-        usb.SetFeatureReport(gainFactor, i);
-        clstat.setGain(0.84f);
-        gainLabel.setText("5 mm/mV");
-        
-        gainF = 1;
-        try {
-            flagoutputStream = new FileWriter("./Info/flags.txt");
-            
-            String flags = gainF+"\n"+horScallingF+"\n"+filterF;
-            
-            flagoutputStream.write(flags);
-            flagoutputStream.flush();
-            flagoutputStream.close();
-        } catch (IOException ex) {
+          this.fivemmButtonMenuItem.setSelected(true);
+          short i = 9;
+          this.gainFactor[1] = -69;
+          this.usb.SetFeatureReport(this.gainFactor, i);
+          this.clstat.setGain(0.84F);
+          this.gainLabel.setText("5 mm/mV");
+          if ((this.leadComboBox.getSelectedIndex() <= 6) || (this.leadComboBox.getSelectedIndex() == 13)) {
+            this.clstat.setVerticalScaling("5 mm/mV");
+          } else {
+            this.clstat.setVerticalScalingV("5 mm/mV");
+          }
+          this.gainF = 1;
+          try
+          {
+            this.flagoutputStream = new FileWriter("./Info/flags.txt");
+
+            String flags = this.gainF + "\n" + this.horScallingF + "\n" + this.filterF;
+
+            this.flagoutputStream.write(flags);
+            this.flagoutputStream.flush();
+            this.flagoutputStream.close();
+          }
+          catch (IOException ex)
+          {
             Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          }
     }//GEN-LAST:event_fivemmButtonMenuItemActionPerformed
 
     private void tenmmButtonMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenmmButtonMenuItem3ActionPerformed
         // TODO add your handling code here:
         
-         short i = 9;
-        gainFactor[1] =  (byte) 0xaa;
-        usb.SetFeatureReport(gainFactor, i);
-        clstat.setGain(0.9f);
-        gainLabel.setText("10 mm/mV");
-        
-         gainF = 2;
-        try {
-            flagoutputStream = new FileWriter("./Info/flags.txt");
-            
-            String flags = gainF+"\n"+horScallingF+"\n"+filterF;
-            
-            flagoutputStream.write(flags);
-            flagoutputStream.flush();
-            flagoutputStream.close();
-        } catch (IOException ex) {
-            Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
+        this.tenmmButtonMenuItem3.setSelected(true);
+        short i = 9;
+        this.gainFactor[1] = -86;
+        this.usb.SetFeatureReport(this.gainFactor, i);
+        this.clstat.setGain(0.9F);
+        this.gainLabel.setText("10 mm/mV");
+        if ((this.leadComboBox.getSelectedIndex() <= 6) || (this.leadComboBox.getSelectedIndex() == 13)) {
+          this.clstat.setVerticalScaling("10 mm/mV");
+        } else {
+          this.clstat.setVerticalScalingV("10 mm/mV");
+        }
+        this.gainF = 2;
+        try
+        {
+          this.flagoutputStream = new FileWriter("./Info/flags.txt");
+
+          String flags = this.gainF + "\n" + this.horScallingF + "\n" + this.filterF;
+
+          this.flagoutputStream.write(flags);
+          this.flagoutputStream.flush();
+          this.flagoutputStream.close();
+        }
+        catch (IOException ex)
+        {
+          Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_tenmmButtonMenuItem3ActionPerformed
@@ -2654,7 +2693,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         clstat=null;
         ld5=null;
         ecgr=null;
-        ld1=null; ld2=null; ld3=null; ld4=null;
+        ld1=null; ld2=null; ld3=null; ld4=null;lde2=null;
         ecg=null;
         disp = null;
         try {
@@ -2871,6 +2910,11 @@ public class EcgDisplay extends javax.swing.JFrame {
             Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void eiiRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eiiRadioButtonMouseClicked
+        // TODO add your handling code here:
+        leadComboBox.setSelectedIndex(12);
+    }//GEN-LAST:event_eiiRadioButtonMouseClicked
 /**/
     
     public void addAtachments(String[] attachments, Multipart multipart)
@@ -2918,7 +2962,6 @@ public class EcgDisplay extends javax.swing.JFrame {
     public javax.swing.JRadioButton avfRadioButton;
     public javax.swing.JRadioButton avlRadioButton;
     public javax.swing.JRadioButton avrRadioButton;
-    private javax.swing.JPanel beatPanel;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
@@ -2927,6 +2970,8 @@ public class EcgDisplay extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.ButtonGroup buttonGroup7;
     private javax.swing.ButtonGroup buttonGroup8;
+    public javax.swing.JRadioButton eiiRadioButton;
+    private javax.swing.JPanel extended2Panel;
     public javax.swing.JRadioButton femaleButton;
     private javax.swing.JRadioButtonMenuItem fifteenRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem fiftyRadioButtonMenuItem;

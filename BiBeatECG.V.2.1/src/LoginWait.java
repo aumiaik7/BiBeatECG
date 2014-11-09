@@ -48,7 +48,7 @@ public class LoginWait extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
 
-        setTitle("Logging in Please Wait ");
+        setTitle("Please Wait ");
         setAlwaysOnTop(true);
         setName("LoginWait"); // NOI18N
 
