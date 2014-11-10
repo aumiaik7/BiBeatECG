@@ -141,7 +141,7 @@ public class EcgDisplay extends javax.swing.JFrame {
          */
         LeadDisplay5 ld5 = new LeadDisplay5(clstat,resolution,ld1,ld2,ld3,ld4,lde2);
         
-        RecipientEmail email = new RecipientEmail(clstat);
+        RecipientEmail email;// = new RecipientEmail(clstat);
         
         
         /*
@@ -275,7 +275,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         //this.setAlwaysOnTop(true);
         initComponents();
-        
+        email = new RecipientEmail(clstat);
         JRProperties.setProperty("net.sf.jasperreports.xpath.executer.factory","net.sf.jasperreports.engine.util.xml.JaxenXPathExecuterFactory");
         
         
@@ -636,6 +636,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
 
         ld1Panel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1575,6 +1576,14 @@ public class EcgDisplay extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setText("Add User");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
 
         jMenuItem4.setText("Send xml file by email");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -2915,6 +2924,15 @@ public class EcgDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         leadComboBox.setSelectedIndex(12);
     }//GEN-LAST:event_eiiRadioButtonMouseClicked
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        try {
+            // TODO add your handling code here:
+            new AddUser().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 /**/
     
     public void addAtachments(String[] attachments, Multipart multipart)
@@ -2994,6 +3012,7 @@ public class EcgDisplay extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     public javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
