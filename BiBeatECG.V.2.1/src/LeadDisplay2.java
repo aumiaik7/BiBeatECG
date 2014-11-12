@@ -199,15 +199,16 @@ public class LeadDisplay2 extends PApplet{
                   
                   sendData = "";
                   sendData += clstat.getFirstName() + "\n";
-                 // sendData += clstat.getLastName() + "\n";
+                  //sendData += clstat.getLastName() + "\n";
                   sendData += clstat.getSex() + "\n";
                   sendData += clstat.getAge() + "\n";
                   sendData += clstat.getLeadNo() + "\n";
-                  sendData += clstat.getGain() + "\n";
                   sendData += clstat.getFilterFlag() + "\n";
                   sendData += clstat.getPatientId() + "\n";
                   sendData += clstat.getUpazila() + "\n";
                   sendData += clstat.gethorScalling() + "\n";
+                  sendData += clstat.getVerticalScalling()+ "\n";
+                  sendData += clstat.getVerticalScallingV()+ "\n";
                   
                     for(int i = 0; i<del3Y.length;i++)
                   {
@@ -252,11 +253,12 @@ public class LeadDisplay2 extends PApplet{
                   sendData += clstat.getSex() + "\n";
                   sendData += clstat.getAge() + "\n";
                   sendData += clstat.getLeadNo() + "\n";
-                  sendData += clstat.getGain() + "\n";
                   sendData += clstat.getFilterFlag() + "\n";
                   sendData += clstat.getPatientId() + "\n";
                   sendData += clstat.getUpazila() + "\n";
                   sendData += clstat.gethorScalling() + "\n";
+                  sendData += clstat.getVerticalScalling()+ "\n";
+                  sendData += clstat.getVerticalScallingV()+ "\n";
                   
                     for(int i = 0; i<del3Y.length;i++)
                   {
@@ -293,17 +295,18 @@ public class LeadDisplay2 extends PApplet{
               {
 
                   
-                  sendData = "";
+                sendData = "";
                   sendData += clstat.getFirstName() + "\n";
                   //sendData += clstat.getLastName() + "\n";
                   sendData += clstat.getSex() + "\n";
                   sendData += clstat.getAge() + "\n";
                   sendData += clstat.getLeadNo() + "\n";
-                  sendData += clstat.getGain() + "\n";
                   sendData += clstat.getFilterFlag() + "\n";
                   sendData += clstat.getPatientId() + "\n";
                   sendData += clstat.getUpazila() + "\n";
                   sendData += clstat.gethorScalling() + "\n";
+                  sendData += clstat.getVerticalScalling()+ "\n";
+                  sendData += clstat.getVerticalScallingV()+ "\n";
                   
                     for(int i = 0; i<del3Y.length;i++)
                   {

@@ -43,7 +43,7 @@ public class ReceiveRemoteData extends Thread{
     BufferedReader reader = null;
     
     
-    String fname = "",lname = "", sex = "", age = "",lead = "",gain = "", filt= "",id = "", upazila = "",horizontalScalling = "";
+    String fname = "",lname = "", sex = "", age = "",lead = "",gain = "", filt= "",id = "", upazila = "",horizontalScalling = "",verticalScalling = "",verticalScallingV = "";
     int horizontalFlag;
     
      private boolean stop = false;
@@ -99,11 +99,12 @@ public class ReceiveRemoteData extends Thread{
                           sex = reader.readLine();
                           age = reader.readLine();
                           lead = reader.readLine();
-                          gain = reader.readLine();
                           filt = reader.readLine();
                           id = reader.readLine();
                           upazila = reader.readLine();
                           horizontalScalling = reader.readLine();
+                          verticalScalling = reader.readLine();
+                          verticalScallingV = reader.readLine();
                           horizontalFlag = Integer.parseInt(horizontalScalling);
                           
                           display.pfNameTextField.setText(fname);
@@ -130,50 +131,62 @@ public class ReceiveRemoteData extends Thread{
                           if(lead.equals("Lead I"))
                           {
                               display.iRadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScalling);
                           }
                           else if(lead.equals("Lead II"))
                           {
                               display.iiRadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScalling);
                           }
                           else if(lead.equals("Lead III"))
                           {
                               display.iiiRadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScalling);
                           }
                           else if(lead.equals("Lead aVR"))
                           {
                               display.avrRadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScalling);
                           }
                           else if(lead.equals("Lead aVL"))
                           {
                               display.avlRadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScalling);
                           }
                           else if(lead.equals("Lead aVF"))
                           {
                               display.avfRadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScalling);
                           }
                           else if(lead.equals("Lead V1"))
                           {
                               display.v1RadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScallingV);
                           }
                           else if(lead.equals("Lead V2"))
                           {
                               display.v2RadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScallingV);
                           }
                           else if(lead.equals("Lead V3"))
                           {
                               display.v3RadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScallingV);
                           }
                           else if(lead.equals("Lead V4"))
                           {
                               display.v4RadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScallingV);
                           }
                           else if(lead.equals("Lead V5"))
                           {
                               display.v5RadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScallingV);
                           }
                           else if(lead.equals("Lead V6"))
                           {
                               display.v6RadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScallingV);
                           }
                           
                            else if(lead.equals("Extended Lead II"))
@@ -182,16 +195,13 @@ public class ReceiveRemoteData extends Thread{
                           }
                           
                           
-                          if(gain.equals("0.9"))
-                          {
-                              display.gainLabel.setText("10 mm/mV");
-                              clstat.setGain(0.9f);
-                          }
-                          else
-                          {
-                              display.gainLabel.setText("5 mm/mV");
-                              clstat.setGain(0.84f);
-                          }
+                         
+                          clstat.setVerticalScaling(verticalScalling);
+                          clstat.setVerticalScalingV(verticalScallingV);
+                          //display.gainLabel.setText("10 mm/mV");
+                             
+                        
+                           
                           
                           if(filt.equals("false"))
                           {
