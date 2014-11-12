@@ -6,6 +6,7 @@
  */
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -65,6 +66,7 @@ import net.sf.jasperreports.engine.util.AbstractSampleApp;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.engine.util.JRXmlUtils;
+import net.sf.jasperreports.view.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 import org.jivesoftware.smack.XMPPException;
 
@@ -141,7 +143,7 @@ public class EcgDisplay extends javax.swing.JFrame {
          */
         LeadDisplay5 ld5 = new LeadDisplay5(clstat,resolution,ld1,ld2,ld3,ld4,lde2);
         
-        RecipientEmail email;// = new RecipientEmail(clstat);
+        //RecipientEmail email;// = new RecipientEmail(clstat);
         
         
         /*
@@ -174,6 +176,8 @@ public class EcgDisplay extends javax.swing.JFrame {
         ReceiveRemoteData remote = new ReceiveRemoteData(jabb, clstat, this); 
         
         LoginWait login = new LoginWait();
+        
+        
         
        /*
          * No Use
@@ -275,7 +279,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         //this.setAlwaysOnTop(true);
         initComponents();
-        email = new RecipientEmail(clstat);
+        //email = new RecipientEmail(clstat);
         JRProperties.setProperty("net.sf.jasperreports.xpath.executer.factory","net.sf.jasperreports.engine.util.xml.JaxenXPathExecuterFactory");
         
         
@@ -655,9 +659,9 @@ public class EcgDisplay extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 0, 0));
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                formKeyPressed(evt);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
             }
         });
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -1577,7 +1581,7 @@ public class EcgDisplay extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem6);
 
-        jMenuItem7.setText("Add User");
+        jMenuItem7.setText("Add/Delete User");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -1610,14 +1614,14 @@ public class EcgDisplay extends javax.swing.JFrame {
 //        ld3Panel.revalidate();
 //        ld4Panel.revalidate();
         //jScrollPane1.revalidate();
-        
+        login.setVisible(true);
          try {
               
-           
+            
             if(clstat.getSendDataFlag() !=2)
            
             {
-                login.setVisible(true);
+               
                 idoutputStream = new FileWriter("./Info/id.txt");
                 idoutputStream.write(""+(id+1));
                 idoutputStream.flush();
@@ -1793,25 +1797,32 @@ public class EcgDisplay extends javax.swing.JFrame {
             catch (JRException ex) {
                 Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
             }
+            login.setVisible(false);
+                this.setFocusableWindowState(false);
                 //System.out.println("A");
                 jv = new JasperViewer(jprint, false);
                 jv.setTitle("ECG Report");
-                jv.setAlwaysOnTop(true);
+                
+                jv.setExtendedState( JFrame.MAXIMIZED_BOTH);
+                //jv.setAlwaysOnTop(true);
+                System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+                
                 jv.setVisible(true);
-               
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
-            try {
-                JasperExportManager.exportReportToPdfFile(jprint, "./report/EcgReport.pdf");
-            } catch (JRException ex) {
-                Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
-            }
+       
+		
+//            try {
+//                JasperExportManager.exportReportToPdfFile(jprint, "./report/EcgReport.pdf");
+//            } catch (JRException ex) {
+//                Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             
             
         }
         catch (IOException ex) {
             Logger.getLogger(EcgRecordGraph.class.getName()).log(Level.SEVERE, null, ex);
         }
-        login.setVisible(false);
+     
+        
 
     }//GEN-LAST:event_reportButtonActionPerformed
 
@@ -1900,6 +1911,7 @@ public class EcgDisplay extends javax.swing.JFrame {
                 login.setVisible(false);
                 clstat.sendDataFlag(2);
             }
+            RecipientEmail email = new RecipientEmail(clstat);
             email.jLabel2.setText("Enter Sender's gMailID");
             
             jLabel2.setText("Logged in");
@@ -1987,7 +1999,7 @@ public class EcgDisplay extends javax.swing.JFrame {
                         remote.isRunning();
                         login.setVisible(false);
                     }
-                
+                RecipientEmail email = new RecipientEmail(clstat);
                 //jabb.login();
                 login.setVisible(false);
                 jLabel2.setText("Logged in");
@@ -2712,10 +2724,6 @@ public class EcgDisplay extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPanel13KeyPressed
 
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formKeyPressed
-
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         new ReportGeneration().setVisible(true);
@@ -2933,6 +2941,11 @@ public class EcgDisplay extends javax.swing.JFrame {
             Logger.getLogger(EcgDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        this.setFocusableWindowState(true);
+    }//GEN-LAST:event_formMouseClicked
 /**/
     
     public void addAtachments(String[] attachments, Multipart multipart)

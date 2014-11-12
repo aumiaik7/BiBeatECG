@@ -141,11 +141,11 @@ public class Main_1 {
     public static void main(String[] args) throws UnknownHostException, UnsupportedLookAndFeelException {
         // TODO code application logic here
         
-        splashInit();           // initialize splash overlay drawing parameters
-        appInit();              // simulate what an application would do 
+        //splashInit();           // initialize splash overlay drawing parameters
+        //appInit();              // simulate what an application would do 
                                 // before starting
-        if (mySplash != null)   // check if we really had a spash screen
-            mySplash.close();   // if so we're now done with it
+        //if (mySplash != null)   // check if we really had a spash screen
+        //    mySplash.close();   // if so we're now done with it
 
         //new EcgDisplay().setVisible(true);
         try 

@@ -145,7 +145,7 @@ public class RecipientEmail extends javax.swing.JFrame {
             else if (clstat.getSendOrReceive() == 2)
             {
                 
-                clstat.setSenderGmailID(jComboBox1.getSelectedItem().toString()+ "@gmail.com");
+                clstat.setgmailID(jComboBox1.getSelectedItem().toString()+ "@gmail.com");
             }
              //   clstat.setgmailID(jTextField1.getText()+ "@gmail.com");
             //jTextField1.setText("");
