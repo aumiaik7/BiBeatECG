@@ -192,6 +192,7 @@ public class ReceiveRemoteData extends Thread{
                            else if(lead.equals("Extended Lead II"))
                           {
                               display.eiiRadioButton.setSelected(true);
+                              display.gainLabel.setText(verticalScalling);
                           }
                           
                           
